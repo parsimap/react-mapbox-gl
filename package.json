@@ -1,10 +1,10 @@
 {
   "name": "@parsimap/react-mapbox-gl",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A Library to render mapboxgl mapview with power of parsimap services.",
   "author": "muhamadzolfaghari",
   "license": "MIT",
-  "repository": "muhamadzolfaghari/react-mapbox-gl",
+  "repository": "muhamadzolfaghari/parsimap-react-mapbox-gl",
   "main": "dist/index.js",
   "module": "dist/index.modern.js",
   "source": "src/index.tsx",
@@ -27,15 +27,15 @@
     "deploy": "gh-pages -d example/build"
   },
   "peerDependencies": {
-    "react": "^16.0.0",
-    "mapbox-gl": "^1.13.0"
+    "mapbox-gl": "^1.13.0",
+    "react": "^16.0.0"
   },
   "devDependencies": {
-    "@types/mapbox-gl": "^2.7.4",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
     "@types/jest": "^25.1.4",
+    "@types/mapbox-gl": "^2.7.4",
     "@types/node": "^12.12.38",
     "@types/react": "^16.9.27",
     "@types/react-dom": "^16.9.7",
