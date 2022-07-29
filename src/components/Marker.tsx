@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React from "react";
 import mapboxgl from "mapbox-gl";
 import useLoadEvent from "../hooks/useLoadEvent";
 import { IMapViewFeatureProps } from "../index";
@@ -8,7 +8,7 @@ interface IProps extends IMapViewFeatureProps {
 }
 
 const Marker = ({ _map, lngLat }: IProps) => {
-  const containerRef = useRef<mapboxgl.Marker>();
+  const containerRef = React.useRef<mapboxgl.Marker>();
   useLoadEvent(() => {
     if (!lngLat) return;
     containerRef.current?.remove();

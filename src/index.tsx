@@ -1,6 +1,5 @@
-import "mapbox-gl/dist/mapbox-gl.css";
-import mapboxgl, { LngLatLike } from "mapbox-gl";
-import React, { FC, useCallback, useEffect, useRef, useState } from "react";
+import mapboxgl from "mapbox-gl";
+import React  from "react";
 import Layer from "./components/Layer";
 import Source from "./components/Source";
 import Marker from "./components/Marker";
@@ -78,35 +77,35 @@ const useMapView = ({
   onViewPortChange,
   styleName = "parsimap-streets-v11",
 }: IMapViewProps) => {
-  const mapRef = useRef<mapboxgl.Map>();
-  const [, setIsCreated] = useState(false);
-  const containerRef = useRef<null | HTMLDivElement>(null);
+  const mapRef = React.useRef<mapboxgl.Map>();
+  const [, setIsCreated] = React.useState(false);
+  const containerRef = React.useRef<null | HTMLDivElement>(null);
 
-  const updateStyle = useCallback(() => {
+  const updateStyle = React.useCallback(() => {
     if (!styleName) return;
 
     const updatedStyle = getStyleURL(styleName, token);
     mapRef.current?.setStyle(updatedStyle);
   }, [styleName, token]);
 
-  useEffect(() => {
+  React.useEffect(() => {
     updateStyle();
   }, [updateStyle, styleName]);
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (mapRef.current) {
       if (zoom) mapRef.current.setZoom(zoom);
-      mapRef.current.setCenter([lng, lat] as LngLatLike);
+      mapRef.current.setCenter([lng, lat] as mapboxgl.LngLatLike);
     }
   }, [zoom, lng, lat]);
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (mapRef.current && bounds) {
       mapRef.current?.fitBounds(bounds);
     }
   }, [bounds]);
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (!mapRef.current) {
       const mapOptions: mapboxgl.MapboxOptions = {
         container: containerRef.current!,
@@ -114,7 +113,7 @@ const useMapView = ({
 
       if (zoom) mapOptions.zoom = zoom;
       if (bounds) mapOptions.bounds = bounds;
-      mapOptions.center = [lng, lat] as LngLatLike;
+      mapOptions.center = [lng, lat] as mapboxgl.LngLatLike;
 
       mapRef.current = new mapboxgl.Map(mapOptions);
       updateStyle();
@@ -164,7 +163,7 @@ const useMapView = ({
   return { containerRef, mapRef };
 };
 
-const MapView: FC<IMapViewProps> = ({ ...rest }) => {
+const MapView: React.FC<IMapViewProps> = ({ ...rest }) => {
   const { containerRef, mapRef } = useMapView(rest);
 
   return (

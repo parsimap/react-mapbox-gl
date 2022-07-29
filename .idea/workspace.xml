@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="8fd12e8a-1d03-4506-9b57-8d639c800e41" name="Changes" comment="The initial project with project altered template project of create-react-library.">
+    <list default="true" id="8fd12e8a-1d03-4506-9b57-8d639c800e41" name="Changes" comment="Unresolved peer dependencies was fixed and resolved. .gitignore was updated.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Marker.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Marker.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -33,25 +35,25 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "js.linters.configure.manually.selectedeslint": "true",
-    "last_opened_file_path": "C:/projects/pmi/Development/Web/WebstormProjects/parsimap-demo",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.standard": "true",
-    "node.js.selected.package.eslint": "C:\\projects\\pmi\\Development\\Web\\WebstormProjects\\@parsimap\\react-mapboxgl\\node_modules\\eslint",
-    "node.js.selected.package.standard": "",
-    "nodejs_interpreter_path": "node",
-    "nodejs_package_manager_path": "npm",
-    "prettierjs.PrettierConfiguration.Package": "C:\\projects\\pmi\\Development\\Web\\WebstormProjects\\@parsimap\\react-mapboxgl\\node_modules\\prettier",
-    "settings.editor.selected.configurable": "project.propVCSSupport.DirectoryMappings",
-    "ts.external.directory.path": "C:\\projects\\pmi\\Development\\Web\\WebstormProjects\\@parsimap\\react-mapbox-gl\\node_modules\\typescript\\lib",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;js.linters.configure.manually.selectedeslint&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/projects/pmi/Development/Web/WebstormProjects/parsimap-demo&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.standard&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;C:\\projects\\pmi\\Development\\Web\\WebstormProjects\\@parsimap\\react-mapbox-gl\\node_modules\\eslint&quot;,
+    &quot;node.js.selected.package.standard&quot;: &quot;&quot;,
+    &quot;nodejs_interpreter_path&quot;: &quot;node&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;prettierjs.PrettierConfiguration.Package&quot;: &quot;C:\\projects\\pmi\\Development\\Web\\WebstormProjects\\@parsimap\\react-mapboxgl\\node_modules\\prettier&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;project.propVCSSupport.DirectoryMappings&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;C:\\projects\\pmi\\Development\\Web\\WebstormProjects\\@parsimap\\react-mapbox-gl\\node_modules\\typescript\\lib&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\projects\pmi\Development\Web\WebstormProjects\@parsimap\react-mapboxgl" />
@@ -90,7 +92,9 @@
       <updated>1659077228957</updated>
       <workItem from="1659077230081" duration="8155000" />
       <workItem from="1659086497805" duration="30000" />
-      <workItem from="1659086568726" duration="1514000" />
+      <workItem from="1659086568726" duration="3616000" />
+      <workItem from="1659093134843" duration="9000" />
+      <workItem from="1659096266745" duration="40000" />
     </task>
     <task id="LOCAL-00001" summary="The initial project with project altered template project of create-react-library.">
       <created>1659085044984</created>
@@ -113,7 +117,14 @@
       <option name="project" value="LOCAL" />
       <updated>1659087531723</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Unresolved peer dependencies was fixed and resolved. .gitignore was updated.">
+      <created>1659088189194</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1659088189194</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -132,7 +143,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="The initial project with project altered template project of create-react-library." />
-    <option name="LAST_COMMIT_MESSAGE" value="The initial project with project altered template project of create-react-library." />
+    <MESSAGE value="Unresolved peer dependencies was fixed and resolved. .gitignore was updated." />
+    <option name="LAST_COMMIT_MESSAGE" value="Unresolved peer dependencies was fixed and resolved. .gitignore was updated." />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
