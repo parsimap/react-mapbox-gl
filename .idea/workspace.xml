@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="8fd12e8a-1d03-4506-9b57-8d639c800e41" name="Changes" comment="Unresolved peer dependencies was fixed and resolved. .gitignore was updated.">
+    <list default="true" id="8fd12e8a-1d03-4506-9b57-8d639c800e41" name="Changes" comment="The problem with spreading props in module was resolved and imported css was removed from project, furthermore the package.json and index.tsx were updated as well.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Marker.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Marker.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/example/tsconfig.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/tsconfig.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -94,7 +95,7 @@
       <workItem from="1659086497805" duration="30000" />
       <workItem from="1659086568726" duration="3616000" />
       <workItem from="1659093134843" duration="9000" />
-      <workItem from="1659096266745" duration="40000" />
+      <workItem from="1659096266745" duration="772000" />
     </task>
     <task id="LOCAL-00001" summary="The initial project with project altered template project of create-react-library.">
       <created>1659085044984</created>
@@ -124,7 +125,14 @@
       <option name="project" value="LOCAL" />
       <updated>1659088189194</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="The problem with spreading props in module was resolved and imported css was removed from project, furthermore the package.json and index.tsx were updated as well.">
+      <created>1659096437072</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1659096437072</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -144,7 +152,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="The initial project with project altered template project of create-react-library." />
     <MESSAGE value="Unresolved peer dependencies was fixed and resolved. .gitignore was updated." />
-    <option name="LAST_COMMIT_MESSAGE" value="Unresolved peer dependencies was fixed and resolved. .gitignore was updated." />
+    <MESSAGE value="The problem with spreading props in module was resolved and imported css was removed from project, furthermore the package.json and index.tsx were updated as well." />
+    <option name="LAST_COMMIT_MESSAGE" value="The problem with spreading props in module was resolved and imported css was removed from project, furthermore the package.json and index.tsx were updated as well." />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

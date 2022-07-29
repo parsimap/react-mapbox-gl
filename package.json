@@ -1,6 +1,6 @@
 {
   "name": "@parsimap/react-mapbox-gl",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "A Library to render mapboxgl mapview with power of parsimap services.",
   "author": "muhamadzolfaghari",
   "license": "MIT",
@@ -16,7 +16,7 @@
   },
   "peerDependencies": {
     "mapbox-gl": "^1.12.0",
-    "react": "^16.11.0"
+    "react": "^18.2.0"
   },
   "scripts": {
     "build": "microbundle-crl --compress --format cjs",
