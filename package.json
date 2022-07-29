@@ -27,8 +27,7 @@
     "deploy": "gh-pages -d example/build"
   },
   "peerDependencies": {
-    "mapbox-gl": "^1.13.0",
-    "react": "^16.0.0"
+    "mapbox-gl": "^1.13.0"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^4.2.4",

@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="8fd12e8a-1d03-4506-9b57-8d639c800e41" name="Changes" comment="The initial project with project altered template project of create-react-library." />
+    <list default="true" id="8fd12e8a-1d03-4506-9b57-8d639c800e41" name="Changes" comment="The initial project with project altered template project of create-react-library.">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -15,6 +17,11 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="MarkdownSettingsMigration">
@@ -32,7 +39,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
     "js.linters.configure.manually.selectedeslint": "true",
-    "last_opened_file_path": "C:/projects/pmi/Development/Web/WebstormProjects/@parsimap/react-mapbox-gl",
+    "last_opened_file_path": "C:/projects/pmi/Development/Web/WebstormProjects/parsimap-demo",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.standard": "true",
     "node.js.selected.package.eslint": "C:\\projects\\pmi\\Development\\Web\\WebstormProjects\\@parsimap\\react-mapboxgl\\node_modules\\eslint",
@@ -83,7 +90,7 @@
       <updated>1659077228957</updated>
       <workItem from="1659077230081" duration="8155000" />
       <workItem from="1659086497805" duration="30000" />
-      <workItem from="1659086568726" duration="863000" />
+      <workItem from="1659086568726" duration="1514000" />
     </task>
     <task id="LOCAL-00001" summary="The initial project with project altered template project of create-react-library.">
       <created>1659085044984</created>
@@ -99,7 +106,14 @@
       <option name="project" value="LOCAL" />
       <updated>1659085223632</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="The initial project with project altered template project of create-react-library.">
+      <created>1659087531723</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1659087531723</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
