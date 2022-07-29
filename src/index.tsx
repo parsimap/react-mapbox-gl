@@ -1,5 +1,5 @@
 import mapboxgl from "mapbox-gl";
-import React  from "react";
+import React from "react";
 import Layer from "./components/Layer";
 import Source from "./components/Source";
 import Marker from "./components/Marker";
@@ -89,6 +89,12 @@ const useMapView = ({
   }, [styleName, token]);
 
   React.useEffect(() => {
+    if (mapboxgl.getRTLTextPluginStatus() !== "loaded") {
+      preloadMapboxPlugins();
+    }
+  }, [])
+
+  React.useEffect(() => {
     updateStyle();
   }, [updateStyle, styleName]);
 
@@ -163,7 +169,7 @@ const useMapView = ({
   return { containerRef, mapRef };
 };
 
-const MapView: React.FC<IMapViewProps> = ({ ...rest }) => {
+const MapView: React.FC<React.PropsWithChildren<IMapViewProps>> = ({ ...rest }) => {
   const { containerRef, mapRef } = useMapView(rest);
 
   return (
@@ -176,7 +182,5 @@ const MapView: React.FC<IMapViewProps> = ({ ...rest }) => {
     </div>
   );
 };
-
-preloadMapboxPlugins();
 
 export { MapView, Layer, Source, Marker };
