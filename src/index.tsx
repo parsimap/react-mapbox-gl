@@ -23,6 +23,7 @@ interface IMapViewProps {
   onMove?: () => void;
   styleName?: MapStyleType;
   onMoveStart?: () => void;
+  style?: React.CSSProperties;
   bounds?: mapboxgl.LngLatBoundsLike;
   onIdle?: (event: mapboxgl.MapboxEvent) => void;
   onData?: (event: mapboxgl.MapDataEvent) => void;
@@ -92,7 +93,7 @@ const useMapView = ({
     if (mapboxgl.getRTLTextPluginStatus() !== "loaded") {
       preloadMapboxPlugins();
     }
-  }, [])
+  }, []);
 
   React.useEffect(() => {
     updateStyle();
@@ -169,11 +170,14 @@ const useMapView = ({
   return { containerRef, mapRef };
 };
 
-const MapView: React.FC<React.PropsWithChildren<IMapViewProps>> = ({ ...rest }) => {
+const MapView: React.FC<React.PropsWithChildren<IMapViewProps>> = ({
+  style,
+  ...rest
+}) => {
   const { containerRef, mapRef } = useMapView(rest);
 
   return (
-    <div ref={containerRef} style={{ height: "100%", width: "100%" }}>
+    <div ref={containerRef} style={{ ...style, height: "100%", width: "100%" }}>
       {React.Children.map(rest.children, (child) =>
         React.isValidElement(child)
           ? React.cloneElement(child, { _map: mapRef.current })
