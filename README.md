@@ -2,7 +2,7 @@
 
 > A Library to render mapboxgl mapview with power of parsimap services.
 
-[![NPM](https://img.shields.io/npm/v/@parsimap/react-mapboxgl.svg)](https://www.npmjs.com/package/@parsimap/react-mapboxgl) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
+[![NPM](https://img.shields.io/npm/v/@parsimap/react-mapbox-gl.svg)](https://www.npmjs.com/package/@parsimap/react-mapbox-gl) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
 ## Install
 
@@ -40,4 +40,4 @@ export default App;
 
 ## License
 
-MIT © [muhamadzolfaghari](https://github.com/muhamadzolfaghari)
+MIT © [Parsimap](https://github.com/parsimap)
