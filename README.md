@@ -26,7 +26,7 @@ const App = () => {
   return (
     <MapView
       {...viewPort}
-      token={"ac3fed7ee26d424e9781400f4106dd38"}
+      token={"PMI_MAP_TOKEN"}
       onViewPortChange={setViewPort}
     >
       <Source id={""} />
