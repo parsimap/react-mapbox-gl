@@ -14,7 +14,7 @@ npm install --save react-mapboxgl
 
 ```tsx
 import React, { useState } from "react";
-import { IViewPort, MapView, Layer, Source } from "react-mapboxgl";
+import { IViewPort, MapView, Layer, Source } from "@parsimap/react-mapbox-gl";
 
 const App = () => {
   const [viewPort, setViewPort] = useState<IViewPort>({
