@@ -7,7 +7,7 @@
 ## Install
 
 ```bash
-npm install --save react-mapboxgl
+npm install --save @parsimap/react-mapboxgl
 ```
 
 ## Usage
