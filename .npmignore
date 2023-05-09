@@ -12,7 +12,7 @@ tsconfig.json
 .prettierignore
 .prettierrc
 .eslintignore330
-.eslintrc.js
+.eslintrc
 public
 scripts
 .gitignore
