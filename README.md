@@ -38,14 +38,18 @@ The marker can add a *map-marker* into the **map-view**.
 
 **Arguments**
 
-* `lngLat` the latitude and longitude of a point.
+| title    | type                                                                 | default     | description                                                                                 |
+|----------|----------------------------------------------------------------------|-------------|---------------------------------------------------------------------------------------------|
+| `lngLat` | [LngLat](https://docs.mapbox.com/mapbox-gl-js/api/geography/#lnglat) | `undefined` | The longitude and latitude of a point such as, [number, number] or {lng:number, lat:number} |
 
 ### GeoJSONSource
 
 This component provided an interface for adding geoJSON format file to the map.
 
-* `id` an unique id determine for identify the source by that.
-* `data` a GeoJSON format data
+| title  | type                                             | default     | description                                             |
+|--------|--------------------------------------------------|-------------|---------------------------------------------------------|
+| `id`   | `string`                                         | `undefined` | an unique id determine for identify the source by that. |
+| `data` | [GeoJSON](https://en.wikipedia.org/wiki/GeoJSON) | `undefined` | a GeoJSON format data                                   |
 
 ### Layer
 
@@ -58,15 +62,19 @@ https://docs.mapbox.com/mapbox-gl-js/style-spec/layers/
 
 **Arguments**
 
-* `id` An unique id to determine for identify the layer.
-* `type` The type for a layer which is specifying the shape of feature.
-* `source` The source should be an existed source.
+| title    | type                                                                       | default     | description                                                    |
+|----------|----------------------------------------------------------------------------|-------------|----------------------------------------------------------------|
+| `id`     | `string`                                                                   | `undefined` | An unique id to determine for identify the layer               |
+| `type`   | [Layer Type](https://docs.mapbox.com/mapbox-gl-js/style-spec/layers/#type) | `undefined` | The type for a layer which is specifying the shape of feature. |
+| `source` | `string`                                                                   | `undefined` | The source should be an existed source                         |
 
 **Optional Arguments**
 
-* `layout` Can determines the layout config of a layer.
-* `paint` Can determines the paint config of a layer.
-* `filter` Can determines the filter for a layer.
+| title    | type     | default     | description                                 |
+|----------|----------|-------------|---------------------------------------------|
+| `layout` | `string` | `undefined` | Can determines the layout config of a layer |
+| `paint`  | `string` | `undefined` | Can determines the paint config of a layer  |
+| `filter` | `string` | `undefined` | Can determines the filter for a layer       |
 
 ## Usage
 
@@ -85,6 +93,9 @@ import {
 } from "@parsimap/react-mapbox-gl";
 import mapboxgl from "mapbox-gl";
 
+/**
+ * A geoJSON
+ */
 const sourceData: mapboxgl.GeoJSONSourceRaw["data"] = {
   type: "FeatureCollection",
   features: [
