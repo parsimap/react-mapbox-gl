@@ -8,6 +8,9 @@ import {
 } from "@parsimap/react-mapbox-gl";
 import mapboxgl from "mapbox-gl";
 
+/**
+ * A geoJSON source as a sample data which has a LineString feature.
+ */
 const sourceData: mapboxgl.GeoJSONSourceRaw["data"] = {
   type: "FeatureCollection",
   features: [
@@ -27,17 +30,26 @@ const sourceData: mapboxgl.GeoJSONSourceRaw["data"] = {
 };
 
 const App = () => {
+  /**
+   * A view port can change current view and zoom of the map.
+   */
   const [viewPort, setViewPort] = useState<ViewPort>({
     zoom: 16,
     lng: 51.41,
     lat: 35.7575,
   });
 
+  function handleClick(event: mapboxgl.MapMouseEvent) {
+    console.log("current lng:", event.lngLat.lng);
+    console.log("current lat:", event.lngLat.lat);
+  }
+
   return (
     <Map
-      {...viewPort}
+      onClick={handleClick}
       onViewPortChange={setViewPort}
       token={"ac3fed7ee26d424e9781400f4106dd38"}
+      {...viewPort}
     >
       <GeoJSONSource id={"streets"} data={sourceData} />
       <Layer id={"line"} type={"line"} source={"streets"} />

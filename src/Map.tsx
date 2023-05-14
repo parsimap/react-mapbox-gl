@@ -1,5 +1,5 @@
 import mapboxgl from "mapbox-gl";
-import React from "react";
+import React, { useEffect } from "react";
 import "mapbox-gl/dist/mapbox-gl.css";
 import normalizeBounds from "./lib/utilites/normalizeBounds";
 import ViewPort from "./ViewPort";
@@ -154,7 +154,7 @@ const useMapView = ({
     const newMap = new mapboxgl.Map(options);
     mapRef.current = newMap;
 
-    function handleMoveEnd(event: mapboxgl.MapboxEvent) {
+    function handleMoveEnd() {
       const zoom = newMap.getZoom();
       const { lng, lat } = newMap.getCenter();
 
@@ -168,35 +168,18 @@ const useMapView = ({
         const viewPort: ViewPort = { lng, lat, zoom };
         onViewPortChange?.(viewPort);
       }
-
-      onMoveEnd?.(event);
     }
 
-    function handleStyleLoaded(event: mapboxgl.MapboxEvent) {
+    function handleStyleLoaded() {
       setIsStyleLoaded(true);
-      onStyleLoad?.(event);
     }
 
     newMap.on("moveend", handleMoveEnd);
     newMap.on("load", handleStyleLoaded);
 
-    if (onData) newMap.on("data", onData);
-    if (onMove) newMap.on("move", onMove);
-    if (onIdle) newMap.once("idle", onIdle);
-    if (onLoad) newMap.on("load", onLoad);
-    if (onClick) newMap.on("click", onClick);
-    if (onMoveStart) newMap.on("movestart", onMoveStart);
-
     return () => {
       newMap.off("moveend", handleMoveEnd);
       newMap.off("style.load", handleStyleLoaded);
-
-      if (onMove) newMap.on("move", onMove);
-      if (onLoad) newMap.off("load", onLoad);
-      if (onData) newMap.off("data", onData);
-      if (onClick) newMap.off("click", onClick);
-      if (onMoveStart) newMap.off("movestart", onMoveStart);
-      if (onStyleLoad) newMap.off("style.load", onStyleLoad);
     };
   }, [
     lat,
@@ -213,6 +196,42 @@ const useMapView = ({
     onStyleLoad,
     isStyleLoaded,
     onViewPortChange,
+  ]);
+
+  /**
+   * The all events is defined here
+   */
+  useEffect(() => {
+    if (!map || !isStyleLoaded) {
+      return;
+    }
+
+    if (onMove) map.on("move", onMove);
+    if (onLoad) map.on("load", onLoad);
+    if (onData) map.on("data", onData);
+    if (onClick) map.on("click", onClick);
+    if (onMoveEnd) map.on("moveend", onMoveEnd);
+    if (onMoveStart) map.on("movestart", onMoveStart);
+    if (onStyleLoad) map.on("style.load", onStyleLoad);
+
+    return () => {
+      if (onMove) map.on("move", onMove);
+      if (onLoad) map.off("load", onLoad);
+      if (onData) map.off("data", onData);
+      if (onClick) map.off("click", onClick);
+      if (onMoveEnd) map.off("moveend", onMoveEnd);
+      if (onMoveStart) map.off("movestart", onMoveStart);
+      if (onStyleLoad) map.off("style.load", onStyleLoad);
+    };
+  }, [
+    onMove,
+    onLoad,
+    onData,
+    onClick,
+    onMoveEnd,
+    onMoveStart,
+    onStyleLoad,
+    isStyleLoaded,
   ]);
 
   return { containerRef, mapRef, isStyleLoaded };

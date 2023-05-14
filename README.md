@@ -12,6 +12,10 @@ npm install @parsimap/react-mapbox-gl
 
 ## Changelog
 
+**Version:** 1.1.4
+
+* The problem with not-working `map-events` was resolved.
+
 **Version:** 1.1.3
 
 * The marker was added.
@@ -94,7 +98,7 @@ import {
 import mapboxgl from "mapbox-gl";
 
 /**
- * A geoJSON
+ * A geoJSON source as a sample data which has a LineString feature.
  */
 const sourceData: mapboxgl.GeoJSONSourceRaw["data"] = {
   type: "FeatureCollection",
@@ -115,17 +119,26 @@ const sourceData: mapboxgl.GeoJSONSourceRaw["data"] = {
 };
 
 const App = () => {
+  /**
+   * A view port can change current view and zoom of the map.
+   */
   const [viewPort, setViewPort] = useState<ViewPort>({
     zoom: 16,
     lng: 51.41,
     lat: 35.7575
   });
 
+  function handleClick(event: mapboxgl.MapMouseEvent) {
+    console.log("current lng:", event.lngLat.lng);
+    console.log("current lat:", event.lngLat.lat);
+  }
+
   return (
     <Map
-      {...viewPort}
+      onClick={handleClick}
       onViewPortChange={setViewPort}
       token={"{PMI_TOKEN}"}
+      {...viewPort}
     >
       <GeoJSONSource id={"streets"} data={sourceData} />
       <Layer id={"line"} type={"line"} source={"streets"} />
