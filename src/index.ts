@@ -5,5 +5,3 @@ import Marker from "./Marker";
 import ViewPort from "./ViewPort";
 
 export { Map, Layer, Marker, ViewPort, GeoJSONSource };
-
-declare namespace parsimap {}

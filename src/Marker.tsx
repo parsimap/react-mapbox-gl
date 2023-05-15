@@ -10,13 +10,17 @@ const Marker = ({ map, lngLat }: PropsType) => {
   const marker = React.useRef<mapboxgl.Marker>();
 
   React.useEffect(() => {
+    if (!map) {
+      return;
+    }
+
     if (!lngLat) {
       marker.current?.remove();
       return;
     }
 
     marker.current = new mapboxgl.Marker().setLngLat(lngLat);
-    marker.current?.addTo(map!);
+    marker.current.addTo(map);
 
     return () => {
       marker.current?.remove();

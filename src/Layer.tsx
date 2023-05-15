@@ -1,5 +1,6 @@
 import mapboxgl from "mapbox-gl";
 import React from "react";
+import isDestroyed from "./lib/utilites/isDestroyed";
 
 type PropsType = {
   map?: mapboxgl.Map;
@@ -8,24 +9,31 @@ type PropsType = {
 
 const Layer = ({ map, onClick, ...rest }: PropsType) => {
   React.useEffect(() => {
-    const layer = map?.getLayer(rest.id);
-    const source = (rest as mapboxgl.Layer).source as string;
-
-    if (!layer && source) {
-      map!.addLayer(rest);
+    if (!map || isDestroyed(map)) {
+      return;
     }
 
+    if (map.getLayer(rest.id)) {
+      map.removeLayer(rest.id);
+    }
+
+    map.addLayer(rest);
+
     if (onClick) {
-      map!.on("click", rest.id, onClick);
+      map.on("click", rest.id, onClick);
     }
 
     return () => {
-      if (onClick) {
-        map!.off("click", rest.id, onClick);
+      if (isDestroyed(map)) {
+        return;
       }
 
-      if (layer) {
-        map!.removeLayer(rest.id);
+      if (onClick) {
+        map.off("click", rest.id, onClick);
+      }
+
+      if (map.getLayer(rest.id)) {
+        map.removeLayer(rest.id);
       }
     };
   }, [map, onClick, rest]);

@@ -12,8 +12,22 @@ npm install @parsimap/react-mapbox-gl
 
 ## Changelog
 
+**version** `1.1.4-beta.5`
+
+* Duplicate maps problem is resolved and destroy was applied.
+* Some reason found for unpredictable behaviour for a map view.
+
+**version** `1.1.4-beta.4`
+
+* Second phase review and investigation to find the problem.
+
+**version** `1.1.4-beta.3`
+
+* First phase review and investigation to find the problem.
+
 **version** `1.1.4-beta.2`
-This version including the better event handling and fully support `load` event.
+
+* This version including the better event handling and fully support `load` event.
 
 **version** `1.1.4-beta.1`
 
@@ -94,7 +108,7 @@ coordinate of that and a marker which is added to the map in the
 defined `lngLat`.
 
 ```tsx
-import { useState } from "react";
+import {useState} from "react";
 import {
   GeoJSONSource,
   Layer,
@@ -147,10 +161,10 @@ const Sample = () => {
       token={"{PMI_TOKEN}"}
       {...viewPort}
     >
-      <GeoJSONSource id={"streets"} data={sourceData} />
-      <Layer id={"line"} type={"line"} source={"streets"} />
-      <Layer id={"point"} type={"circle"} source={"streets"} />
-      <Marker lngLat={[51.41, 35.7575]} />
+      <GeoJSONSource id={"streets"} data={sourceData}/>
+      <Layer id={"line"} type={"line"} source={"streets"}/>
+      <Layer id={"point"} type={"circle"} source={"streets"}/>
+      <Marker lngLat={[51.41, 35.7575]}/>
     </Map>
   );
 };

@@ -42,25 +42,43 @@ const Sample = () => {
   function handleClick(event: mapboxgl.MapMouseEvent) {
     console.log("current lng:", event.lngLat.lng);
     console.log("current lat:", event.lngLat.lat);
+    event.target.remove();
   }
 
-  function handleLoad() {
-    console.log(';e');
+  function handleLoad(e: mapboxgl.MapboxEvent) {
+    // console.log(e.target.fitBounds([[51.41, 35.7575], [51.411, 35.75751]]));
   }
+
+  const [toggle, setToggle] = useState(true);
 
   return (
-    <Map
-      onClick={handleClick}
-      onViewPortChange={setViewPort}
-      token={"ac3fed7ee26d424e9781400f4106dd38"}
-      onLoad={handleLoad}
-      {...viewPort}
-    >
-      <GeoJSONSource id={"streets"} data={sourceData} />
-      <Layer id={"line"} type={"line"} source={"streets"} />
-      <Layer id={"point"} type={"circle"} source={"streets"} />
-      <Marker lngLat={[51.41, 35.7575]} />
-    </Map>
+    <>
+      <button
+        onClick={() => {
+          setToggle((prev) => !prev);
+        }}
+      >
+        Toggle map
+      </button>
+      <div style={{ height: "100%" }}>
+        {toggle ? (
+          <Map
+            onClick={handleClick}
+            onViewPortChange={setViewPort}
+            token={"ac3fed7ee26d424e9781400f4106dd38"}
+            onLoad={handleLoad}
+            {...viewPort}
+          >
+            <GeoJSONSource id={"streets"} data={sourceData} />
+            <Layer id={"line"} type={"line"} source={"streets"} />
+            <Layer id={"point"} type={"circle"} source={"streets"} />
+            <Marker lngLat={[51.41, 35.7575]} />
+          </Map>
+        ) : (
+          <div>stuck!</div>
+        )}
+      </div>
+    </>
   );
 };
 
