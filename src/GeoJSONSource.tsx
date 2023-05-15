@@ -13,16 +13,17 @@ const GeoJSONSource = ({ map, id, data }: PropsType) => {
 
     if (source) {
       source.setData(data as any);
-      return;
+    } else {
+      map!.addSource(id, {
+        type: "geojson",
+        data,
+      });
     }
 
-    map!.addSource(id, {
-      type: "geojson",
-      data,
-    });
-
-    return () => {};
-  }, [map, id]);
+    return () => {
+      source?.setData({ type: "FeatureCollection", features: [] });
+    };
+  }, [map, id, data]);
 
   return null;
 };

@@ -25,10 +25,10 @@ const Layer = ({ map, onClick, ...rest }: PropsType) => {
       }
 
       if (layer) {
-        map?.removeLayer(rest.id);
+        map!.removeLayer(rest.id);
       }
     };
-  }, [map, onClick]);
+  }, [map, onClick, rest]);
 
   return null;
 };

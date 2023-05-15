@@ -1,13 +1,13 @@
 import "./index.css";
 import ReactDOM from "react-dom/client";
-import App from "./App";
-import React from 'react';
+import React from "react";
+import Sample2 from "./Sample2";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 root.render(
   <React.StrictMode>
-    <App />
+    <Sample2 />
   </React.StrictMode>
 );

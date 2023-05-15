@@ -12,11 +12,18 @@ npm install @parsimap/react-mapbox-gl
 
 ## Changelog
 
-**Version:** 1.1.4
+**version** `1.1.4-beta.2`
+This version including the better event handling and fully support `load` event.
 
-* The problem with not-working `map-events` was resolved.
+**version** `1.1.4-beta.1`
 
-**Version:** 1.1.3
+* This version just released and events is correctly work.
+
+**version** `1.1.4`
+
+* The problem with not-working _map-events_ was resolved.
+
+**version** `1.1.3`
 
 * The marker was added.
 * The layer and source can be added.
@@ -118,7 +125,7 @@ const sourceData: mapboxgl.GeoJSONSourceRaw["data"] = {
   ]
 };
 
-const App = () => {
+const Sample = () => {
   /**
    * A view port can change current view and zoom of the map.
    */
@@ -148,7 +155,7 @@ const App = () => {
   );
 };
 
-export default App;
+export default Sample;
 ```
 
 ## License

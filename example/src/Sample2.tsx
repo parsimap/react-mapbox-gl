@@ -29,7 +29,7 @@ const sourceData: mapboxgl.GeoJSONSourceRaw["data"] = {
   ],
 };
 
-const App = () => {
+const Sample = () => {
   /**
    * A view port can change current view and zoom of the map.
    */
@@ -44,11 +44,16 @@ const App = () => {
     console.log("current lat:", event.lngLat.lat);
   }
 
+  function handleLoad() {
+    console.log(';e');
+  }
+
   return (
     <Map
       onClick={handleClick}
       onViewPortChange={setViewPort}
       token={"ac3fed7ee26d424e9781400f4106dd38"}
+      onLoad={handleLoad}
       {...viewPort}
     >
       <GeoJSONSource id={"streets"} data={sourceData} />
@@ -59,4 +64,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default Sample;

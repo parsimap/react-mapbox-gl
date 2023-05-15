@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-undef
 module.exports = {
   extends: ["eslint:recommended", "plugin:react/recommended"],
   parser: "@typescript-eslint/parser",
@@ -8,5 +9,13 @@ module.exports = {
     JSX: true,
     GeolocationPosition: true,
     GeolocationPositionError: true,
+  },
+  settings: {
+    "import/resolver": {
+      node: {
+        paths: ["src"],
+        extensions: [".js", ".jsx", ".ts", ".tsx"],
+      },
+    },
   },
 };

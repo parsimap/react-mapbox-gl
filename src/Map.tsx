@@ -1,8 +1,11 @@
 import mapboxgl from "mapbox-gl";
-import React, { useEffect } from "react";
+import React, { useState } from "react";
 import "mapbox-gl/dist/mapbox-gl.css";
 import normalizeBounds from "./lib/utilites/normalizeBounds";
 import ViewPort from "./ViewPort";
+import preloadMapboxPlugins from "./lib/utilites/preloadMapboxPlugins";
+import getStyleURL from "./lib/utilites/getStyleURL";
+import useViewPortChanging from "./hooks/useViewPortChanging";
 
 type PropsType = {
   lat: number;
@@ -29,27 +32,6 @@ type PropsType = {
 
 type MapStyleType = "parsimap-streets-v11" | string;
 
-const getStyleURL = (
-  name: string,
-  token: string,
-  baseApiUrl = "https://api.parsimap.ir"
-) => {
-  const url = new URL(baseApiUrl);
-  url.pathname += `/styles/${name}`;
-  if (token) url.searchParams.append("key", token);
-  url.searchParams.append("service", String(true));
-  return url.toString();
-};
-
-const preloadMapboxPlugins = (cdnUrl = "https://cdn.parsimap.ir") => {
-  if (mapboxgl.getRTLTextPluginStatus() === "unavailable") {
-    mapboxgl.setRTLTextPlugin(
-      `${cdnUrl}/third-party/mapbox-gl-js/plugins/mapbox-gl-rtl-text/v0.2.3/mapbox-gl-rtl-text.js`,
-      () => {}
-    );
-  }
-};
-
 const useMapView = ({
   lng,
   lat,
@@ -70,18 +52,17 @@ const useMapView = ({
   fitBoundsOptions,
   styleName = "parsimap-streets-v11",
 }: PropsType) => {
-  const prevZoom = React.useRef<number>();
-  const prevLat = React.useRef<number>();
-  const prevLng = React.useRef<number>();
   const mapRef = React.useRef<mapboxgl.Map>();
-  const [isStyleLoaded, setIsStyleLoaded] = React.useState(false);
+  const [isCreated, setIsCreated] = useState(false);
+  const [isLoaded, setIsLoaded] = React.useState(false);
   const containerRef = React.useRef<null | HTMLDivElement>(null);
   const map = mapRef.current;
+  useViewPortChanging(lng, lat, zoom, onViewPortChange, map);
 
   React.useEffect(() => {
     // get the rtl plugin
     preloadMapboxPlugins(cdnUrl);
-  }, []);
+  }, [cdnUrl]);
 
   React.useEffect(() => {
     if (!map || !styleName) {
@@ -90,26 +71,7 @@ const useMapView = ({
 
     const style = getStyleURL(styleName, token, baseApiUrl);
     map.setStyle(style, { diff: true });
-  }, [styleName, token]);
-
-  React.useEffect(() => {
-    if (
-      !map ||
-      (prevZoom.current === zoom &&
-        prevLng.current === lng &&
-        prevLat.current === lat)
-    ) {
-      return;
-    }
-
-    if (zoom) {
-      map.setZoom(zoom);
-    }
-
-    if (lng && lat) {
-      map.setCenter({ lng, lat });
-    }
-  }, [zoom, lng, lat]);
+  }, [baseApiUrl, map, styleName, token]);
 
   React.useEffect(() => {
     if (!map || !bounds) {
@@ -123,7 +85,7 @@ const useMapView = ({
     }
 
     map.fitBounds(bounds, fitBoundsOptions);
-  }, [bounds]);
+  }, [bounds, fitBoundsOptions, map]);
 
   // The main map creation
   React.useEffect(() => {
@@ -151,64 +113,36 @@ const useMapView = ({
       options.style = getStyleURL(styleName, token, baseApiUrl);
     }
 
-    const newMap = new mapboxgl.Map(options);
-    mapRef.current = newMap;
+    mapRef.current = new mapboxgl.Map(options);
+    setIsCreated(true);
+  }, [baseApiUrl, bounds, lat, lng, map, styleName, token, zoom]);
 
-    function handleMoveEnd() {
-      const zoom = newMap.getZoom();
-      const { lng, lat } = newMap.getCenter();
+  React.useEffect(() => {
+    if (!isCreated) return;
 
-      if (
-        !(
-          prevLat.current === lat &&
-          prevLng.current === lng &&
-          prevZoom.current === zoom
-        )
-      ) {
-        const viewPort: ViewPort = { lng, lat, zoom };
-        onViewPortChange?.(viewPort);
-      }
+    function handleLoad() {
+      setIsLoaded(true);
     }
 
-    function handleStyleLoaded() {
-      setIsStyleLoaded(true);
-    }
-
-    newMap.on("moveend", handleMoveEnd);
-    newMap.on("load", handleStyleLoaded);
+    map?.on("load", handleLoad);
 
     return () => {
-      newMap.off("moveend", handleMoveEnd);
-      newMap.off("style.load", handleStyleLoaded);
+      map?.on("load", handleLoad);
     };
-  }, [
-    lat,
-    lng,
-    zoom,
-    bounds,
-    onData,
-    onIdle,
-    onMove,
-    onClick,
-    onLoad,
-    onMoveEnd,
-    onMoveStart,
-    onStyleLoad,
-    isStyleLoaded,
-    onViewPortChange,
-  ]);
+  }, [isCreated, map]);
 
   /**
    * The all events is defined here
    */
-  useEffect(() => {
-    if (!map || !isStyleLoaded) {
+  React.useEffect(() => {
+    if (!map) {
       return;
     }
 
     if (onMove) map.on("move", onMove);
     if (onLoad) map.on("load", onLoad);
     if (onData) map.on("data", onData);
+    if (onIdle) map.on("idle", onIdle);
     if (onClick) map.on("click", onClick);
     if (onMoveEnd) map.on("moveend", onMoveEnd);
     if (onMoveStart) map.on("movestart", onMoveStart);
@@ -218,30 +152,33 @@ const useMapView = ({
       if (onMove) map.on("move", onMove);
       if (onLoad) map.off("load", onLoad);
       if (onData) map.off("data", onData);
+      if (onIdle) map.off("idle", onIdle);
       if (onClick) map.off("click", onClick);
       if (onMoveEnd) map.off("moveend", onMoveEnd);
       if (onMoveStart) map.off("movestart", onMoveStart);
       if (onStyleLoad) map.off("style.load", onStyleLoad);
     };
   }, [
-    onMove,
-    onLoad,
-    onData,
+    map,
     onClick,
+    onData,
+    onIdle,
+    onLoad,
+    onMove,
     onMoveEnd,
     onMoveStart,
     onStyleLoad,
-    isStyleLoaded,
+    onViewPortChange,
   ]);
 
-  return { containerRef, mapRef, isStyleLoaded };
+  return { containerRef, mapRef, isLoaded };
 };
 
 const Map: React.FC<React.PropsWithChildren<PropsType>> = ({
   style,
   ...rest
 }) => {
-  const { containerRef, mapRef, isStyleLoaded } = useMapView(rest);
+  const { containerRef, mapRef, isLoaded } = useMapView(rest);
 
   return (
     <div
@@ -253,7 +190,7 @@ const Map: React.FC<React.PropsWithChildren<PropsType>> = ({
         ...style,
       }}
     >
-      {isStyleLoaded && (
+      {isLoaded && (
         <ChildrenWithProps map={mapRef.current!}>
           {rest.children}
         </ChildrenWithProps>
@@ -268,6 +205,8 @@ const ChildrenWithProps = ({
 }: React.PropsWithChildren<{
   map: mapboxgl.Map;
 }>) => {
+  if (!map) return null;
+
   return (
     <React.Fragment>
       {React.Children.map(children, (child) => {
