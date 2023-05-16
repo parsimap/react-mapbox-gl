@@ -12,6 +12,10 @@ npm install @parsimap/react-mapbox-gl
 
 ## Changelog
 
+**version** `1.1.7`
+
+The problem with map style was resolved.
+
 **version** `1.1.6`
 
 * The `mapStyle` in `Map` component props, officially can change the style of the map.
