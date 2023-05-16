@@ -1,6 +1,6 @@
 import mapboxgl from "mapbox-gl";
 import React from "react";
-import isDestroyed from "./lib/utilites/isDestroyed";
+import isDestroyed from "../lib/utilites/isDestroyed";
 
 type PropsType = {
   map?: mapboxgl.Map;

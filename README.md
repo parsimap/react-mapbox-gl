@@ -14,7 +14,7 @@ npm install @parsimap/react-mapbox-gl
 
 **version** `1.1.4-beta.5`
 
-* Duplicate maps problem is resolved and destroy was applied.
+* The duplication problem of maps is resolved and destroy was applied.
 * Some reason found for unpredictable behaviour for a map view.
 
 **version** `1.1.4-beta.4`

@@ -1,6 +1,6 @@
 import React from "react";
 import mapboxgl from "mapbox-gl";
-import isDestroyed from "./lib/utilites/isDestroyed";
+import isDestroyed from "../lib/utilites/isDestroyed";
 
 type PropsType = {
   id: string;
