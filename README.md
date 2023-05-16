@@ -11,6 +11,12 @@ npm install @parsimap/react-mapbox-gl
 ```
 
 ## Changelog
+
+**version** `1.1.6`
+
+* The `mapStyle` in `Map` component props, officially can change the style of the map.
+* The `style` in `Map` component props, can change the container `CSS` style.
+
 **version** `1.1.5`
 
 * This version can support all options are used in `mapbox-gl` module.
@@ -64,6 +70,12 @@ the
 `PMI_TOKEN` to a
 valid [access-token](https://account.parsimap.ir/token-registration).
 
+Optional Arguments
+
+| title      | type               | default                | description           |
+|------------|--------------------|------------------------|-----------------------|
+| `mapStyle` | `ParsimapMapStyle` | `parsimap-streets-v11` | The style of the map. |
+
 ### Marker
 
 The marker can add a *map-marker* into the **map-view**.
@@ -77,6 +89,8 @@ The marker can add a *map-marker* into the **map-view**.
 ### GeoJSONSource
 
 This component provided an interface for adding geoJSON format file to the map.
+
+**Arguments**
 
 | title  | type                                             | default     | description                                             |
 |--------|--------------------------------------------------|-------------|---------------------------------------------------------|

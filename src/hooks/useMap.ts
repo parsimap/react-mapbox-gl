@@ -7,7 +7,13 @@ import getStyleURL from "../lib/utilites/getStyleURL";
 import normalizeBounds from "../lib/utilites/normalizeBounds";
 import useEvents from "./useEvents";
 
-const useMap = ({ token, cdnUrl, baseApiUrl, ...rest }: IMapProps) => {
+const useMap = ({
+  token,
+  cdnUrl,
+  mapStyle,
+  baseApiUrl,
+  ...rest
+}: Omit<IMapProps, "style">) => {
   const map = useRef<mapboxgl.Map>();
   const [isLoaded, setIsLoaded] = React.useState(false);
   const container = React.useRef<null | HTMLDivElement>(null);
@@ -20,13 +26,13 @@ const useMap = ({ token, cdnUrl, baseApiUrl, ...rest }: IMapProps) => {
   }, [cdnUrl]);
 
   React.useEffect(() => {
-    if (!map.current || !rest.style || !isLoaded) {
+    if (!map.current || !mapStyle || !isLoaded) {
       return;
     }
 
-    const style = getStyleURL(rest.style, token, baseApiUrl);
+    const style = getStyleURL(mapStyle, token, baseApiUrl);
     map.current.setStyle(style, { diff: true });
-  }, [baseApiUrl, isLoaded, rest.style, token]);
+  }, [baseApiUrl, isLoaded, mapStyle, token]);
 
   React.useEffect(() => {
     if (!map.current || !rest.bounds || !isLoaded) {
@@ -58,13 +64,13 @@ const useMap = ({ token, cdnUrl, baseApiUrl, ...rest }: IMapProps) => {
     }
 
     options.style = getStyleURL(
-      rest.style ?? "parsimap-streets-v11",
+      mapStyle ?? "parsimap-streets-v11",
       token,
       baseApiUrl
     );
 
     map.current = new mapboxgl.Map(options);
-  }, [baseApiUrl, rest, token]);
+  }, [baseApiUrl, mapStyle, rest, token]);
 
   React.useEffect(() => {
     if (!map.current) {

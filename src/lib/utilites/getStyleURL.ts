@@ -7,5 +7,6 @@ export default function getStyleURL(
   url.pathname += `styles/${name}`;
   if (token) url.searchParams.append("key", token);
   url.searchParams.append("service", String(true));
+
   return url.toString();
 }

@@ -5,8 +5,8 @@ import IMapProps from "../interfaces/IMapProps";
 import useMap from "../hooks/useMap";
 
 const Map = ({
-  containerStyle,
   children,
+  style,
   ...rest
 }: React.PropsWithChildren<IMapProps>) => {
   const { container, map, isLoaded } = useMap(rest);
@@ -18,7 +18,7 @@ const Map = ({
         height: "100%",
         width: "100%",
         position: "relative",
-        ...containerStyle,
+        ...style,
       }}
     >
       {isLoaded && (
