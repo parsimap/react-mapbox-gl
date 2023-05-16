@@ -21,13 +21,13 @@ const Map: React.FC<React.PropsWithChildren<IMapProps>> = ({
       }}
     >
       {isLoaded && (
-        <ChildrenWithProps map={map.current}>{rest.children}</ChildrenWithProps>
+        <ChildrenWithMap map={map.current}>{rest.children}</ChildrenWithMap>
       )}
     </div>
   );
 };
 
-const ChildrenWithProps = ({
+const ChildrenWithMap = ({
   children,
   map,
 }: React.PropsWithChildren<{
