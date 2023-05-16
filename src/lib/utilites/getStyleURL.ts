@@ -4,7 +4,7 @@ export default function getStyleURL(
   baseApiUrl = "https://api.parsimap.ir"
 ) {
   const url = new URL(baseApiUrl);
-  url.pathname += `/styles/${name}`;
+  url.pathname += `styles/${name}`;
   if (token) url.searchParams.append("key", token);
   url.searchParams.append("service", String(true));
   return url.toString();
