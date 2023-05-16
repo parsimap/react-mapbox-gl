@@ -1,6 +1,6 @@
 import mapboxgl from "mapbox-gl";
 import React from "react";
-import isDestroyed from "./lib/utilites/isDestroyed";
+import isMapDestroyed from "../lib/utilites/isMapDestroyed";
 
 type PropsType = {
   map?: mapboxgl.Map;
@@ -9,7 +9,7 @@ type PropsType = {
 
 const Layer = ({ map, onClick, ...rest }: PropsType) => {
   React.useEffect(() => {
-    if (!map || isDestroyed(map)) {
+    if (!map || isMapDestroyed(map)) {
       return;
     }
 
@@ -24,7 +24,7 @@ const Layer = ({ map, onClick, ...rest }: PropsType) => {
     }
 
     return () => {
-      if (isDestroyed(map)) {
+      if (isMapDestroyed(map)) {
         return;
       }
 

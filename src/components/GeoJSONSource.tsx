@@ -1,6 +1,6 @@
 import React from "react";
 import mapboxgl from "mapbox-gl";
-import isDestroyed from "./lib/utilites/isDestroyed";
+import isMapDestroyed from "../lib/utilites/isMapDestroyed";
 
 type PropsType = {
   id: string;
@@ -10,7 +10,7 @@ type PropsType = {
 
 const GeoJSONSource = ({ map, id, data }: PropsType) => {
   React.useEffect(() => {
-    if (!map || isDestroyed(map)) {
+    if (!map || isMapDestroyed(map)) {
       return;
     }
 

@@ -12,9 +12,17 @@ npm install @parsimap/react-mapbox-gl
 
 ## Changelog
 
+**version** `1.1.5`
+
+* This version can support all options are used in `mapbox-gl` module.
+* The problem while the map destroyed was resolved.
+* Some improvement are applied.
+* The `documentation` is updated in new release version.
+* The `Sample.aspx` in the demo is updated.
+
 **version** `1.1.4-beta.5`
 
-* Duplicate maps problem is resolved and destroy was applied.
+* The duplication problem of maps is resolved and destroy was applied.
 * Some reason found for unpredictable behaviour for a map view.
 
 **version** `1.1.4-beta.4`
@@ -159,6 +167,7 @@ const Sample = () => {
       onClick={handleClick}
       onViewPortChange={setViewPort}
       token={"{PMI_TOKEN}"}
+      style={"parsimap-streets-v11"}
       {...viewPort}
     >
       <GeoJSONSource id={"streets"} data={sourceData}/>
