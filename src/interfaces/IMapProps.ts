@@ -2,19 +2,19 @@ import mapboxgl from "mapbox-gl";
 import IMapEvents from "./IMapEvents";
 import React from "react";
 
-type StyleType = "parsimap-streets-v11" | string;
+type MapStyleType = "parsimap-streets-v11" | string;
 
 interface IMapProps
-  extends Omit<mapboxgl.MapboxOptions, "container">,
+  extends Omit<mapboxgl.MapboxOptions, "container" | "style">,
     IMapEvents {
   lat: number;
   lng: number;
   token: string;
   cdnUrl?: string;
-  style?: StyleType;
   baseApiUrl?: string;
+  mapStyle: MapStyleType;
+  style?: React.CSSProperties;
   bounds?: mapboxgl.LngLatBoundsLike;
-  containerStyle?: React.CSSProperties;
   fitBoundsOptions?: mapboxgl.FitBoundsOptions;
 }
 
