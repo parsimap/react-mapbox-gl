@@ -1,31 +1,18 @@
 import IMapProps from "../interfaces/IMapProps";
 import React, { useRef } from "react";
 import mapboxgl from "mapbox-gl";
-import useViewPortChanging from "./useViewPortChanging";
+import useViewPort from "./useViewPort";
 import preloadMapboxPlugins from "../lib/utilites/preloadMapboxPlugins";
 import getStyleURL from "../lib/utilites/getStyleURL";
 import normalizeBounds from "../lib/utilites/normalizeBounds";
 import useEvents from "./useEvents";
 
-const useMap = ({
-  lng,
-  lat,
-  token,
-  zoom,
-  bounds,
-  onIdle,
-  cdnUrl,
-  baseApiUrl,
-  onMoveStart,
-  fitBoundsOptions,
-  styleName = "parsimap-streets-v11",
-  ...rest
-}: IMapProps) => {
+const useMap = ({ token, cdnUrl, baseApiUrl, ...rest }: IMapProps) => {
   const map = useRef<mapboxgl.Map>();
   const [isLoaded, setIsLoaded] = React.useState(false);
   const container = React.useRef<null | HTMLDivElement>(null);
-  useViewPortChanging(lng, lat, zoom, rest.onViewPortChange, map.current);
-  useEvents(rest);
+  const prevViewPort = useViewPort(rest, map.current);
+  useEvents(rest, prevViewPort, map.current);
 
   React.useEffect(() => {
     // get the rtl plugin
@@ -33,27 +20,27 @@ const useMap = ({
   }, [cdnUrl]);
 
   React.useEffect(() => {
-    if (!map.current || !styleName) {
+    if (!map.current || !rest.style || !isLoaded) {
       return;
     }
 
-    const style = getStyleURL(styleName, token, baseApiUrl);
+    const style = getStyleURL(rest.style, token, baseApiUrl);
     map.current.setStyle(style, { diff: true });
-  }, [baseApiUrl, styleName, token]);
+  }, [baseApiUrl, isLoaded, rest.style, token]);
 
   React.useEffect(() => {
-    if (!map.current || !bounds) {
+    if (!map.current || !rest.bounds || !isLoaded) {
       return;
     }
 
-    const data = normalizeBounds(bounds);
+    const data = normalizeBounds(rest.bounds);
 
     if (!data) {
       throw new Error("The bounds is not correct");
     }
 
-    map.current.fitBounds(bounds, fitBoundsOptions);
-  }, [bounds, fitBoundsOptions, map]);
+    map.current.fitBounds(rest.bounds, rest.fitBoundsOptions);
+  }, [rest.fitBoundsOptions, isLoaded, map, rest.bounds]);
 
   // The main map creation
   React.useEffect(() => {
@@ -63,26 +50,21 @@ const useMap = ({
 
     const options: mapboxgl.MapboxOptions = {
       container: container.current!,
+      ...rest,
     };
 
-    if (zoom) {
-      options.zoom = zoom;
+    if (rest.lng & rest.lat) {
+      options.center = new mapboxgl.LngLat(rest.lng, rest.lat);
     }
 
-    if (bounds) {
-      options.bounds = bounds;
-    }
-
-    if (lng & lat) {
-      options.center = new mapboxgl.LngLat(lng, lat);
-    }
-
-    if (styleName) {
-      options.style = getStyleURL(styleName, token, baseApiUrl);
-    }
+    options.style = getStyleURL(
+      rest.style ?? "parsimap-streets-v11",
+      token,
+      baseApiUrl
+    );
 
     map.current = new mapboxgl.Map(options);
-  }, [baseApiUrl, bounds, lat, lng, styleName, token, zoom]);
+  }, [baseApiUrl, rest, token]);
 
   React.useEffect(() => {
     if (!map.current) {
@@ -98,7 +80,7 @@ const useMap = ({
     return () => {
       map.current?.off("load", handleLoad);
     };
-  }, [map]);
+  }, []);
 
   React.useEffect(() => {
     if (!map.current || !isLoaded) {

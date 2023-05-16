@@ -45,7 +45,7 @@ const Sample = () => {
     event.target.remove();
   }
 
-  function handleLoad(e: mapboxgl.MapboxEvent) {
+  function handleLoad() {
     // console.log(e.target.fitBounds([[51.41, 35.7575], [51.411, 35.75751]]));
   }
 
@@ -67,6 +67,7 @@ const Sample = () => {
             onViewPortChange={setViewPort}
             token={"ac3fed7ee26d424e9781400f4106dd38"}
             onLoad={handleLoad}
+            // style={"parsimap-streets-1"}
             {...viewPort}
           >
             <GeoJSONSource id={"streets"} data={sourceData} />

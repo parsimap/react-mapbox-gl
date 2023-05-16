@@ -1,3 +1,3 @@
 export default class ViewPort {
-  constructor(public zoom: number, public lat: number, public lng: number) {}
+  constructor(public lng: number, public lat: number, public zoom: number) {}
 }

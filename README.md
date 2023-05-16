@@ -11,6 +11,11 @@ npm install @parsimap/react-mapbox-gl
 ```
 
 ## Changelog
+**version** `1.1.5`
+
+* This version can support all options are used in `mapbox-gl` module.
+* The problem while the map destroyed was resolved.
+* Some improvement are applied.
 
 **version** `1.1.4-beta.5`
 

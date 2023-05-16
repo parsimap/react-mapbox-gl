@@ -4,10 +4,11 @@ import "mapbox-gl/dist/mapbox-gl.css";
 import IMapProps from "../interfaces/IMapProps";
 import useMap from "../hooks/useMap";
 
-const Map: React.FC<React.PropsWithChildren<IMapProps>> = ({
-  style,
+const Map = ({
+  containerStyle,
+  children,
   ...rest
-}) => {
+}: React.PropsWithChildren<IMapProps>) => {
   const { container, map, isLoaded } = useMap(rest);
 
   return (
@@ -17,11 +18,11 @@ const Map: React.FC<React.PropsWithChildren<IMapProps>> = ({
         height: "100%",
         width: "100%",
         position: "relative",
-        ...style,
+        ...containerStyle,
       }}
     >
       {isLoaded && (
-        <ChildrenWithMap map={map.current}>{rest.children}</ChildrenWithMap>
+        <ChildrenWithMap map={map.current}>{children}</ChildrenWithMap>
       )}
     </div>
   );
@@ -37,7 +38,7 @@ const ChildrenWithMap = ({
 
   return (
     <React.Fragment>
-      {React.Children.map(children, (child) => {
+      {React.Children.map(children, (child: any) => {
         if (React.isValidElement(child)) {
           return React.cloneElement(child, {
             map,

@@ -1,6 +1,7 @@
 import IMapEvents from "../interfaces/IMapEvents";
 import React from "react";
 import mapboxgl from "mapbox-gl";
+import ViewPort from "../ViewPort";
 
 const useEvents = (
   {
@@ -12,7 +13,9 @@ const useEvents = (
     onMoveEnd,
     onStyleLoad,
     onMoveStart,
+    onViewPortChange,
   }: IMapEvents,
+  prevViewPort: React.MutableRefObject<ViewPort | undefined>,
   map?: mapboxgl.Map
 ) => {
   React.useEffect(() => {
@@ -142,6 +145,41 @@ const useEvents = (
       }
     };
   }, [map, onStyleLoad]);
+
+  React.useEffect(() => {
+    if (!map || onViewPortChange) {
+      return;
+    }
+
+    function handleMoveEnd() {
+      if (!map) {
+        return;
+      }
+
+      const zoom = map.getZoom();
+      const { lng, lat } = map.getCenter();
+      const prev = prevViewPort.current;
+
+      if (!prev) {
+        prevViewPort.current = new ViewPort(lng, lat, zoom);
+        onViewPortChange?.(prevViewPort.current);
+        return;
+      }
+
+      if (prev.lng !== lng || prev.lat !== lat || prev.zoom !== zoom) {
+        prevViewPort.current = new ViewPort(lng, lat, zoom);
+        onViewPortChange?.(prevViewPort.current);
+      }
+    }
+
+    map.on("moveend", handleMoveEnd);
+
+    return () => {
+      if (onViewPortChange) {
+        map.off("moveend", handleMoveEnd);
+      }
+    };
+  }, [map, onViewPortChange, prevViewPort]);
 };
 
 export default useEvents;
