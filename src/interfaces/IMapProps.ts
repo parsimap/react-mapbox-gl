@@ -12,7 +12,7 @@ interface IMapProps
   token: string;
   cdnUrl?: string;
   baseApiUrl?: string;
-  mapStyle: MapStyleType;
+  mapStyle?: MapStyleType;
   style?: React.CSSProperties;
   bounds?: mapboxgl.LngLatBoundsLike;
   fitBoundsOptions?: mapboxgl.FitBoundsOptions;
