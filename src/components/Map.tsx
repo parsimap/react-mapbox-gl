@@ -1,15 +1,15 @@
-import mapboxgl from "mapbox-gl";
 import React from "react";
 import "mapbox-gl/dist/mapbox-gl.css";
 import IMapProps from "../interfaces/IMapProps";
 import useMap from "../hooks/useMap";
+import Children from "./Children";
 
 const Map = ({
   children,
   style,
   ...rest
 }: React.PropsWithChildren<IMapProps>) => {
-  const { container, map, isLoaded } = useMap(rest);
+  const { container, map, queue } = useMap(rest);
 
   return (
     <div
@@ -21,36 +21,14 @@ const Map = ({
         ...style,
       }}
     >
-      {isLoaded && (
-        <ChildrenWithMap map={map.current}>{children}</ChildrenWithMap>
-      )}
+      {
+        <Children map={map.current} queue={queue}>
+          {children}
+        </Children>
+      }
     </div>
   );
 };
 
-const ChildrenWithMap = ({
-  children,
-  map,
-}: React.PropsWithChildren<{
-  map?: mapboxgl.Map;
-}>) => {
-  if (!map) return null;
-
-  return (
-    <React.Fragment>
-      {React.Children.map(children, (child: any) => {
-        if (React.isValidElement(child)) {
-          return React.cloneElement(child, {
-            map,
-          } as React.HtmlHTMLAttributes<{
-            map: mapboxgl.Map;
-          }>);
-        }
-
-        return null;
-      })}
-    </React.Fragment>
-  );
-};
 
 export default Map;

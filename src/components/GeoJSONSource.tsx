@@ -1,34 +1,35 @@
 import React from "react";
 import mapboxgl from "mapbox-gl";
-import isMapDestroyed from "../lib/utilites/isMapDestroyed";
+import IGeoJSONSource from "../interfaces/IGeoJSONSource";
+import { QueueCallbackType } from "../types/QueueCallbackType";
 
-type PropsType = {
-  id: string;
-  map?: mapboxgl.Map;
-  data: mapboxgl.GeoJSONSourceRaw["data"];
-};
+type SourceType = mapboxgl.GeoJSONSource | undefined;
 
-const GeoJSONSource = ({ map, id, data }: PropsType) => {
+const GeoJSONSource = ({ map, queue, id, data }: IGeoJSONSource) => {
   React.useEffect(() => {
-    if (!map || isMapDestroyed(map)) {
-      return;
-    }
+    const callback: QueueCallbackType = (map) => {
+      const source = map.getSource(id) as SourceType;
 
-    const source = map.getSource(id) as mapboxgl.GeoJSONSource | undefined;
+      if (source) {
+        source.setData(data as any);
+      } else {
+        map.addSource(id, {
+          type: "geojson",
+          data,
+        });
+      }
+    };
 
-    if (source) {
-      source.setData(data as any);
+    if (!map?.isStyleLoaded()) {
+      queue!.current[`source:${id}`] = callback;
     } else {
-      map.addSource(id, {
-        type: "geojson",
-        data,
-      });
+      callback(map);
     }
 
     return () => {
       // source?.setData({ type: "FeatureCollection", features: [] });
     };
-  }, [map, id, data]);
+  }, [map, id, data, queue]);
 
   return null;
 };

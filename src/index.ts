@@ -5,3 +5,4 @@ import Marker from "./components/Marker";
 import ViewPort from "./ViewPort";
 
 export { Map, Layer, Marker, ViewPort, GeoJSONSource };
+
