@@ -1,6 +1,6 @@
 {
   "name": "@parsimap/react-mapbox-gl",
-  "version": "1.1.8",
+  "version": "1.2.0",
   "description": "A Library to render mapboxgl mapview with power of parsimap services.",
   "author": "muhamadzolfaghari",
   "license": "MIT",
@@ -45,8 +45,7 @@
     "test:unit": "cross-env CI=1 react-scripts test --env=jsdom",
     "test:watch": "react-scripts test --env=jsdom",
     "predeploy": "cd example && yarn install && yarn run build",
-    "deploy": "gh-pages -d example/build",
-    "publish": "node scripts/fttx.mjs"
+    "deploy": "gh-pages -d example/build"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^4.2.4",
