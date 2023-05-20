@@ -67,7 +67,7 @@ const Sample = () => {
             onViewPortChange={setViewPort}
             token={"ac3fed7ee26d424e9781400f4106dd38"}
             onLoad={handleLoad}
-            style={"parsimap-streets-v11"}
+            mapStyle={"parsimap-streets-v11"}
             {...viewPort}
           >
             <GeoJSONSource id={"streets"} data={sourceData} />

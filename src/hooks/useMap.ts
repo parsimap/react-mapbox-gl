@@ -1,11 +1,12 @@
 import IMapProps from "../interfaces/IMapProps";
-import React, { useRef } from "react";
+import React from "react";
 import mapboxgl from "mapbox-gl";
 import useViewPort from "./useViewPort";
 import preloadMapboxPlugins from "../lib/utilites/preloadMapboxPlugins";
 import getStyleURL from "../lib/utilites/getStyleURL";
 import normalizeBounds from "../lib/utilites/normalizeBounds";
 import useEvents from "./useEvents";
+import { QueueMutableRefType } from "../types/QueueMutableRefType";
 
 const useMap = ({
   token,
@@ -14,10 +15,10 @@ const useMap = ({
   baseApiUrl,
   ...rest
 }: Omit<IMapProps, "style">) => {
-  const map = useRef<mapboxgl.Map>();
-  const [isLoaded, setIsLoaded] = React.useState(false);
+  const map = React.useRef<mapboxgl.Map>();
   const container = React.useRef<null | HTMLDivElement>(null);
   const prevViewPort = useViewPort(rest, map.current);
+  const queue = React.useRef<QueueMutableRefType["current"]>({});
   useEvents(rest, prevViewPort, map.current);
 
   React.useEffect(() => {
@@ -26,16 +27,16 @@ const useMap = ({
   }, [cdnUrl]);
 
   React.useEffect(() => {
-    if (!map.current || !mapStyle || !isLoaded) {
+    if (!map.current?.isStyleLoaded() || !mapStyle) {
       return;
     }
 
     const style = getStyleURL(mapStyle, token, baseApiUrl);
     map.current.setStyle(style, { diff: true });
-  }, [baseApiUrl, isLoaded, mapStyle, token]);
+  }, [baseApiUrl, mapStyle, token]);
 
   React.useEffect(() => {
-    if (!map.current || !rest.bounds || !isLoaded) {
+    if (!map.current?.isStyleLoaded() || !rest.bounds) {
       return;
     }
 
@@ -46,7 +47,7 @@ const useMap = ({
     }
 
     map.current.fitBounds(rest.bounds, rest.fitBoundsOptions);
-  }, [rest.fitBoundsOptions, isLoaded, map, rest.bounds]);
+  }, [rest.fitBoundsOptions, map, rest.bounds]);
 
   // The main map creation
   React.useEffect(() => {
@@ -70,36 +71,48 @@ const useMap = ({
     );
 
     map.current = new mapboxgl.Map(options);
-  }, [baseApiUrl, mapStyle, rest, token]);
-
-  React.useEffect(() => {
-    if (!map.current) {
-      return;
-    }
 
     function handleLoad() {
-      setIsLoaded(true);
+      for (const key in queue.current) {
+        if (queue.current[key]) {
+          queue.current[key](map.current!);
+          delete queue.current[key];
+        }
+      }
     }
 
     map.current.on("load", handleLoad);
+  }, [baseApiUrl, mapStyle, rest, token]);
 
-    return () => {
-      map.current?.off("load", handleLoad);
-    };
-  }, []);
+  // React.useEffect(() => {
+  //   if (!map.current) {
+  //     return;
+  //   }
+  //
+  //   function handleLoad() {
+  //     setIsLoaded(true);
+  //   }
+  //
+  //   map.current.on("load", handleLoad);
+  //
+  //   return () => {
+  //     map.current?.off("load", handleLoad);
+  //   };
+  // }, []);
 
-  React.useEffect(() => {
-    if (!map.current || !isLoaded) {
-      return;
-    }
+  // React.useEffect(() => {
+  //   if (!map.current || !isLoaded) {
+  //     return;
+  //   }
+  //
+  //   return () => {
+  //     // setIsLoaded(false);
+  //     // console.log('called?  sss')
+  //     // map.current?.remove();
+  //   };
+  // }, [isLoaded, map]);
 
-    return () => {
-      setIsLoaded(false);
-      map.current?.remove();
-    };
-  }, [isLoaded, map]);
-
-  return { container, map, isLoaded };
+  return { container, map, queue };
 };
 
 export default useMap;

@@ -1,12 +1,12 @@
 import ViewPort from "../ViewPort";
-import React, { useRef } from "react";
+import React from "react";
 import mapboxgl from "mapbox-gl";
 
 const useViewPort = (
   { lng, lat, zoom }: Omit<ViewPort, "zoom"> & { zoom?: number },
   map?: mapboxgl.Map
 ) => {
-  const prevViewPort = useRef<ViewPort>();
+  const prevViewPort = React.useRef<ViewPort>();
 
   React.useEffect(() => {
     if (!map) {

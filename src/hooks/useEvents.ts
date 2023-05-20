@@ -147,7 +147,7 @@ const useEvents = (
   }, [map, onStyleLoad]);
 
   React.useEffect(() => {
-    if (!map || onViewPortChange) {
+    if (!map || !onViewPortChange) {
       return;
     }
 
@@ -160,24 +160,24 @@ const useEvents = (
       const { lng, lat } = map.getCenter();
       const prev = prevViewPort.current;
 
+      onViewPortChange?.(new ViewPort(lng, lat, zoom));
+
       if (!prev) {
         prevViewPort.current = new ViewPort(lng, lat, zoom);
-        onViewPortChange?.(prevViewPort.current);
+        // onViewPortChange?.(prevViewPort.current);
         return;
       }
 
       if (prev.lng !== lng || prev.lat !== lat || prev.zoom !== zoom) {
         prevViewPort.current = new ViewPort(lng, lat, zoom);
-        onViewPortChange?.(prevViewPort.current);
+        // onViewPortChange?.(prevViewPort.current);
       }
     }
 
     map.on("moveend", handleMoveEnd);
 
     return () => {
-      if (onViewPortChange) {
-        map.off("moveend", handleMoveEnd);
-      }
+      map.off("moveend", handleMoveEnd);
     };
   }, [map, onViewPortChange, prevViewPort]);
 };

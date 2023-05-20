@@ -1,42 +1,35 @@
 import mapboxgl from "mapbox-gl";
 import React from "react";
-import isMapDestroyed from "../lib/utilites/isMapDestroyed";
+import ILayerProps from "../interfaces/ILayerProps";
+import { QueueCallbackType } from "../types/QueueCallbackType";
 
-type PropsType = {
-  map?: mapboxgl.Map;
-  onClick?: (event: mapboxgl.MapMouseEvent) => {};
-} & mapboxgl.AnyLayer;
-
-const Layer = ({ map, onClick, ...rest }: PropsType) => {
+const Layer = ({
+  map,
+  queue,
+  onClick,
+  ...rest
+}: ILayerProps & mapboxgl.AnyLayer) => {
   React.useEffect(() => {
-    if (!map || isMapDestroyed(map)) {
-      return;
-    }
+    const callback: QueueCallbackType = (map) => {
+      map.addLayer(rest);
 
-    if (map.getLayer(rest.id)) {
-      map.removeLayer(rest.id);
-    }
+      if (onClick) {
+        map.on("click", rest.id, onClick);
+      }
+    };
 
-    map.addLayer(rest);
-
-    if (onClick) {
-      map.on("click", rest.id, onClick);
+    if (!map?.isStyleLoaded()) {
+      queue!.current[`layer:${rest.id}`] = callback;
+    } else {
+      callback(map);
     }
 
     return () => {
-      if (isMapDestroyed(map)) {
-        return;
-      }
-
-      if (onClick) {
+      if (onClick && map?.isStyleLoaded()) {
         map.off("click", rest.id, onClick);
       }
-
-      if (map.getLayer(rest.id)) {
-        map.removeLayer(rest.id);
-      }
     };
-  }, [map, onClick, rest]);
+  }, [map, onClick, queue, rest]);
 
   return null;
 };
