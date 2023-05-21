@@ -28,18 +28,18 @@ const useViewPort = (
       return;
     }
 
-    const prev = prevViewPort.current;
-
-    if (prev.lng !== lng || prev.lat !== lng) {
-      prevViewPort.current.lng = lng;
-      prevViewPort.current.lat = lat;
-      map.setCenter({ lng, lat });
-    }
-
-    if (zoom && zoom !== prev.zoom) {
-      map.setZoom(zoom);
-      prevViewPort.current.zoom = zoom;
-    }
+    // const prev = prevViewPort.current;
+    //
+    // if (prev.lng !== lng || prev.lat !== lng) {
+    //   prevViewPort.current.lng = lng;
+    //   prevViewPort.current.lat = lat;
+    //   map.setCenter({ lng, lat });
+    // }
+    //
+    // if (zoom && zoom !== prev.zoom) {
+    //   map.setZoom(zoom);
+    //   prevViewPort.current.zoom = zoom;
+    // }
   }, [zoom, lng, lat, map, prevViewPort]);
 
   return prevViewPort;

@@ -17,8 +17,8 @@ const useMap = ({
 }: Omit<IMapProps, "style">) => {
   const map = React.useRef<mapboxgl.Map>();
   const container = React.useRef<null | HTMLDivElement>(null);
-  const prevViewPort = useViewPort(rest, map.current);
   const queue = React.useRef<QueueMutableRefType["current"]>({});
+  const prevViewPort = useViewPort(rest, map.current);
   useEvents(rest, prevViewPort, map.current);
 
   React.useEffect(() => {
@@ -60,6 +60,7 @@ const useMap = ({
       ...rest,
     };
 
+
     if (rest.lng & rest.lat) {
       options.center = new mapboxgl.LngLat(rest.lng, rest.lat);
     }
@@ -100,17 +101,11 @@ const useMap = ({
   //   };
   // }, []);
 
-  // React.useEffect(() => {
-  //   if (!map.current || !isLoaded) {
-  //     return;
-  //   }
-  //
-  //   return () => {
-  //     // setIsLoaded(false);
-  //     // console.log('called?  sss')
-  //     // map.current?.remove();
-  //   };
-  // }, [isLoaded, map]);
+  React.useEffect(() => {
+    return () => {
+      // map.current?.remove();
+    };
+  }, [map]);
 
   return { container, map, queue };
 };

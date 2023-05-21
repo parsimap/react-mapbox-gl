@@ -30,7 +30,7 @@ yarn add @parsimap/react-mapbox-gl
 
 **version** `1.1.8`
 
-* The problem with definition of Layer or Marker and GeoJSONSource were resolved.
+* The problem with the definition of Layer or Marker and GeoJSONSource were resolved.
 * `load` and `style.load` events are worked.
 * The problem with `onViewPortChange` was resolved.
 * The map component is now stable and can be used.
