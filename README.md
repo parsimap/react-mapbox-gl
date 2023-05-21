@@ -12,85 +12,87 @@ yarn add @parsimap/react-mapbox-gl
 
 # Getting started with React Mapbox GL
 
-* [Changelog](#changelog)
-* [Components](#components)
-  * [Map](#map)
-    * [Map Arguments](#map-arguments)
-    * [Map Arguments](#map-optional-arguments)
-  * [Marker](#marker)
-    * [Marker Arguments](#marker-arguments)
-  * [Layer](#layer)
-    * [Layer Arguments](#layer-arguments)
-    * [Layer Optional Arguments](#layer-optional-arguments)
-* [Usage](#usage)
-  * [Render Map with features](#render-map-with-features)
-  * [Render Map with features](#using-a-created-map-object)
+- [Changelog](#changelog)
+- [Components](#components)
+  - [Map](#map)
+    - [Map Arguments](#map-arguments)
+    - [Map Arguments](#map-optional-arguments)
+  - [Marker](#marker)
+    - [Marker Arguments](#marker-arguments)
+  - [Layer](#layer)
+    - [Layer Arguments](#layer-arguments)
+    - [Layer Optional Arguments](#layer-optional-arguments)
+- [Usage](#usage)
+  - [Render Map with features](#render-map-with-features)
+  - [Render Map with features](#using-a-created-map-object)
 
 ## Changelog
 
+**version** `1.2.1`
+
+- A Problem with update new viewPort was resolved.
+
 **version** `1.1.8`
 
-* The problem with the definition of Layer or Marker and GeoJSONSource were resolved.
-* `load` and `style.load` events are worked.
-* The problem with `onViewPortChange` was resolved.
-* The map component is now stable and can be used.
-* The documentation was updated and provided a list for navigation easy to sections.
+- The problem with the definition of Layer or Marker and GeoJSONSource were resolved.
+- `load` and `style.load` events are worked.
+- The problem with `onViewPortChange` was resolved.
+- The map component is now stable and can be used.
+- The documentation was updated and provided a list for navigation easy to sections.
 
 **version** `1.1.7-beta.1`
 
-* Some minor error was resolved.
+- Some minor error was resolved.
 
 **version** `1.1.7`
 
-* Some minor error was resolved.
+- Some minor error was resolved.
 
 **version** `1.1.6`
 
-* The `mapStyle` in `Map` component props, officially can change the style of the map.
-* The `style` in `Map` component props, can change the container `CSS` style.
+- The `mapStyle` in `Map` component props, officially can change the style of the map.
+- The `style` in `Map` component props, can change the container `CSS` style.
 
 **version** `1.1.5`
 
-* This version can support all options are used in `mapbox-gl` module.
-* The problem while the map was destroyed was resolved.
-* Some improvement are applied.
-* The `documentation` is updated in a new release version.
-* The `Sample.aspx` in the demo is updated.
+- This version can support all options are used in `mapbox-gl` module.
+- The problem while the map was destroyed was resolved.
+- Some improvement are applied.
+- The `documentation` is updated in a new release version.
+- The `Sample.aspx` in the demo is updated.
 
 **version** `1.1.4-beta.5`
 
-* The duplication problem of maps is resolved and destroy was applied.
-* Some reason found for unpredictable behavior for a map view.
+- The duplication problem of maps is resolved and destroy was applied.
+- Some reason found for unpredictable behavior for a map view.
 
 **version** `1.1.4-beta.4`
 
-* Second phase review and investigation to find the problem.
+- Second phase review and investigation to find the problem.
 
 **version** `1.1.4-beta.3`
 
-* First phase of review and investigation to find the problem.
+- First phase of review and investigation to find the problem.
 
 **version** `1.1.4-beta.2`
 
-* This version including the better event handling and fully support `load` event.
+- This version including the better event handling and fully support `load` event.
 
 **version** `1.1.4-beta.1`
 
-* This version just released and events correctly work.
+- This version just released and events correctly work.
 
 **version** `1.1.4`
 
-* The problem with not-working _map-events_ was resolved.
+- The problem with not-working _map-events_ was resolved.
 
 **version** `1.1.3`
 
-* The marker was added.
-* The layer and source can be added.
-* Some problems were resolved.
-
+- The marker was added.
+- The layer and source can be added.
+- Some problems were resolved.
 
 ## Components
-
 
 ### Map
 
@@ -122,7 +124,7 @@ valid [access-token](https://account.parsimap.ir/token-registration).
 
 ### Marker
 
-The marker can add a *map-marker* into the **map-view**.
+The marker can add a _map-marker_ into the **map-view**.
 
 #### Marker Arguments
 
@@ -146,9 +148,7 @@ This component provided an interface for adding geoJSON format file to the map.
 This component allows adding a feature on the map to describe the feature type
 and which type of data that was added by resource could be used, for instance to
 illustrate a point feature the `symbol` or `circle` could be suitable.
-To see more about layers, you can read [mapbox-gl-js layers](
-https://docs.mapbox.com/mapbox-gl-js/style-spec/layers/
-).
+To see more about layers, you can read [mapbox-gl-js layers](https://docs.mapbox.com/mapbox-gl-js/style-spec/layers/).
 
 #### Layer Arguments
 
@@ -177,9 +177,16 @@ coordinate of that and a marker which is added to the map in the
 defined `lngLat`.
 
 ```tsx
-import {useState} from "react";
-import {GeoJSONSource, Layer, Map, Marker, ViewPort} from "@parsimap/react-mapbox-gl";
+import {
+  GeoJSONSource,
+  Layer,
+  Map,
+  Marker,
+  ViewPort,
+} from "@parsimap/react-mapbox-gl";
 import mapboxgl from "mapbox-gl";
+import {AtRule} from "csstype";
+import Viewport = AtRule.Viewport;
 
 /**
  * A geoJSON source as a sample data which has a LineString feature.
@@ -194,36 +201,40 @@ const sourceData: mapboxgl.GeoJSONSourceRaw["data"] = {
         coordinates: [
           [51.41, 35.7575],
           [51.413, 35.7573],
-          [51.414, 35.7571]
-        ]
+          [51.414, 35.7571],
+        ],
       },
-      properties: {}
-    }
-  ]
+      properties: {},
+    },
+  ],
+};
+
+/**
+ * A view port can change current view and zoom of the map.
+ */
+const DEFAULT_VIEW_PORT: ViewPort = {
+  zoom: 16,
+  lng: 51.41,
+  lat: 35.7575,
 };
 
 const Sample = () => {
-  /**
-   * A view port can change current view and zoom of the map.
-   */
-  const [viewPort, setViewPort] = useState<ViewPort>({
-    zoom: 16,
-    lng: 51.41,
-    lat: 35.7575
-  });
-
   function handleClick(event: mapboxgl.MapMouseEvent) {
     console.log("current lng:", event.lngLat.lng);
     console.log("current lat:", event.lngLat.lat);
   }
 
+  function handleViewPortChange(viewPort: Viewport) {
+    // Doing somethign with updated viewPort
+  }
+
   return (
     <Map
       onClick={handleClick}
-      onViewPortChange={setViewPort}
       token={"{PMI_TOKEN}"}
       style={"parsimap-streets-v11"}
-      {...viewPort}
+      onViewPortChange={handleViewPortChange}
+      {...DEFAULT_VIEW_PORT}
     >
       <GeoJSONSource id={"streets"} data={sourceData}/>
       <Layer id={"line"} type={"line"} source={"streets"}/>
@@ -246,35 +257,28 @@ In this example, the 'setCenter' method is changing the current center of the ma
 instance there is a need to use `load` event on the other hand `onLoad` prop of the `Map` component.
 
 ```tsx
-import {useState} from "react";
 import {Map, ViewPort} from "@parsimap/react-mapbox-gl";
 import mapboxgl from "mapbox-gl";
-import {AtRule} from "csstype";
 
+/**
+ * A view port can change current view and zoom of the map.
+ */
+const DEFAULT_VIEW_PORT: ViewPort = {
+  zoom: 16,
+  lng: 51.41,
+  lat: 35.7575,
+};
 
 const Sample = () => {
-  /**
-   * A view port can change current view and zoom of the map.
-   */
-  const [viewPort, setViewPort] = useState<ViewPort>({
-    zoom: 16,
-    lng: 51.41,
-    lat: 35.7575
-  });
-
   function handleLoad(event: mapboxgl.MapboxEvent) {
+    // the map instance can be accessed from here to interact with map.
     const map = event.target;
     const newCenter = new mapboxgl.LngLat(51, 41);
-    map.setCenter(newCenter)
+    map.setCenter(newCenter);
   }
 
   return (
-    <Map
-      onLoad={handleLoad}
-      token={"{PMI_TOKEN}"}
-      onViewPortChange={setViewPort}
-      {...viewPort}
-    />
+    <Map onLoad={handleLoad} token={"{PMI_TOKEN}"} {...DEFAULT_VIEW_PORT} />
   );
 };
 
