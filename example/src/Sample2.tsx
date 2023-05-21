@@ -9,7 +9,7 @@ import {
 import mapboxgl from "mapbox-gl";
 
 /**
- * A geoJSON source as a sample data which has a LineString feature.
+ * A geoJSON source as sample data which has a LineString feature.
  */
 const sourceData: mapboxgl.GeoJSONSourceRaw["data"] = {
   type: "FeatureCollection",
@@ -61,7 +61,7 @@ const Sample = () => {
         Toggle map
       </button>
       <div style={{ height: "100%" }}>
-        {toggle ? (
+        {!toggle ? (
           <Map
             onClick={handleClick}
             onViewPortChange={setViewPort}

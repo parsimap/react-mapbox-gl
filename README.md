@@ -28,6 +28,12 @@ yarn add @parsimap/react-mapbox-gl
 
 ## Changelog
 
+**version** ` 1.2.1-beta.2`
+
+* The events to determine to load the map and its style was implemented and worked in tree brnach of components which
+  control by convenient state management.
+* The main code was reviewed.
+
 **version** `1.2.1`
 
 - A Problem with update new viewPort was resolved.

@@ -22,7 +22,7 @@ const Map = ({
       }}
     >
       {
-        <Children map={map.current} queue={queue}>
+        <Children map={map} queue={queue}>
           {children}
         </Children>
       }

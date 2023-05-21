@@ -15,11 +15,12 @@ const useMap = ({
   baseApiUrl,
   ...rest
 }: Omit<IMapProps, "style">) => {
-  const map = React.useRef<mapboxgl.Map>();
+  const [map, setMap] = React.useState<mapboxgl.Map>();
   const container = React.useRef<null | HTMLDivElement>(null);
-  const prevViewPort = useViewPort(rest, map.current);
+  const prevViewPort = useViewPort(rest, map);
   const queue = React.useRef<QueueMutableRefType["current"]>({});
-  useEvents(rest, prevViewPort, map.current);
+  const isCreated = React.useRef(false);
+  useEvents(rest, prevViewPort, map);
 
   React.useEffect(() => {
     // get the rtl plugin
@@ -27,16 +28,16 @@ const useMap = ({
   }, [cdnUrl]);
 
   React.useEffect(() => {
-    if (!map.current?.isStyleLoaded() || !mapStyle) {
+    if (!map?.isStyleLoaded() || !mapStyle) {
       return;
     }
 
     const style = getStyleURL(mapStyle, token, baseApiUrl);
-    map.current.setStyle(style, { diff: true });
-  }, [baseApiUrl, mapStyle, token]);
+    map.setStyle(style, { diff: true });
+  }, [baseApiUrl, map, mapStyle, token]);
 
   React.useEffect(() => {
-    if (!map.current?.isStyleLoaded() || !rest.bounds) {
+    if (!map?.isStyleLoaded() || !rest.bounds) {
       return;
     }
 
@@ -46,12 +47,12 @@ const useMap = ({
       throw new Error("The bounds is not correct");
     }
 
-    map.current.fitBounds(rest.bounds, rest.fitBoundsOptions);
+    map.fitBounds(rest.bounds, rest.fitBoundsOptions);
   }, [rest.fitBoundsOptions, map, rest.bounds]);
 
   // The main map creation
   React.useEffect(() => {
-    if (map.current) {
+    if (isCreated.current) {
       return;
     }
 
@@ -70,22 +71,36 @@ const useMap = ({
       baseApiUrl
     );
 
-    map.current = new mapboxgl.Map(options);
+    const newMap = new mapboxgl.Map(options);
+    isCreated.current = true;
+    setMap(newMap);
+  }, [baseApiUrl, map, mapStyle, rest, token]);
+
+  React.useEffect(() => {
+    if (!map) {
+      return;
+    }
 
     function handleLoad() {
       for (const key in queue.current) {
         if (queue.current[key]) {
-          queue.current[key](map.current!);
+          queue.current[key](map!);
           delete queue.current[key];
         }
       }
+
+      setMap(map);
     }
 
-    map.current.on("load", handleLoad);
-  }, [baseApiUrl, mapStyle, rest, token]);
+    map.on("load", handleLoad);
+
+    return () => {
+      map.off("load", handleLoad);
+    };
+  }, [map]);
 
   // React.useEffect(() => {
-  //   if (!map.current) {
+  //   if (!map) {
   //     return;
   //   }
   //
@@ -93,22 +108,22 @@ const useMap = ({
   //     setIsLoaded(true);
   //   }
   //
-  //   map.current.on("load", handleLoad);
+  //   map.on("load", handleLoad);
   //
   //   return () => {
-  //     map.current?.off("load", handleLoad);
+  //     map?.off("load", handleLoad);
   //   };
   // }, []);
 
   // React.useEffect(() => {
-  //   if (!map.current || !isLoaded) {
+  //   if (!map || !isLoaded) {
   //     return;
   //   }
   //
   //   return () => {
   //     // setIsLoaded(false);
   //     // console.log('called?  sss')
-  //     // map.current?.remove();
+  //     // map?.remove();
   //   };
   // }, [isLoaded, map]);
 
