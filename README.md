@@ -22,15 +22,25 @@ yarn add @parsimap/react-mapbox-gl
   - [Layer](#layer)
     - [Layer Arguments](#layer-arguments)
     - [Layer Optional Arguments](#layer-optional-arguments)
+- [Type Definition](#type-definitions)
+  - [LngLat](#lnglat)
+  - [ViewPort](#viewport)
 - [Usage](#usage)
   - [Render Map with features](#render-map-with-features)
-  - [Render Map with features](#using-a-created-map-object)
+  - [Render Map with features](#using-a-created-map-instance)
 
 ## Changelog
 
-**version** ` 1.2.1-beta.2`
+**version** `1.2.2`
 
-* The events to determine to load the map and its style was implemented and worked in tree brnach of components which
+* `OnViewPortChange` was added to map officially, and you can get the latest center and zoom without a need to
+  use `OnMoveEnd` to retrieve data.
+* Some improvements in performance were applied.
+* [Type Definition](#type-definitions) and added to documentation.
+
+**version** `1.2.1-beta.2`
+
+* The events to determine to load the map and its style were implemented and worked in tree branches of components which
   control by convenient state management.
 * The main code was reviewed.
 
@@ -122,11 +132,12 @@ valid [access-token](https://account.parsimap.ir/token-registration).
 
 #### Map Optional Arguments
 
-| title         | type                                 | default                | description                                         |
-|---------------|--------------------------------------|------------------------|-----------------------------------------------------|
-| `mapStyle`    | `ParsimapMapStyle`                   | `parsimap-streets-v11` | The style of the map.                               |
-| `onLoad`      | `(map: event: mapboxgl.MapboxEvent)` | `undefined`            | Detect the map element is defined and fully loaded. |
-| `onStyleLoad` | `(map: event: mapboxgl.MapboxEvent)` | `undefined`            | Trigger when style only loaded.                     |
+| title              | type                                         | default                | description                                         |
+|--------------------|----------------------------------------------|------------------------|-----------------------------------------------------|
+| `mapStyle`         | `ParsimapMapStyle`                           | `parsimap-streets-v11` | The style of the map.                               |
+| `onLoad`           | `(map: event: mapboxgl.MapboxEvent) => void` | `undefined`            | Detect the map element is defined and fully loaded. |
+| `onStyleLoad`      | `(map: event: mapboxgl.MapboxEvent) => void` | `undefined`            | Trigger when style only loaded.                     |
+| `onViewPortChange` | (viewPort: [ViewPort](#viewport)) => void    | `undefined`            | Trigger when style only loaded.                     |
 
 ### Marker
 
@@ -171,6 +182,22 @@ To see more about layers, you can read [mapbox-gl-js layers](https://docs.mapbox
 | `layout` | `string` | `undefined` | Can determines the layout config of a layer |
 | `paint`  | `string` | `undefined` | Can determines the paint config of a layer  |
 | `filter` | `string` | `undefined` | Can determines the filter for a layer       |
+
+## Type Definitions
+
+### LngLat
+
+| title | type     | description                                               |
+|-------|----------|-----------------------------------------------------------|
+| `lng` | `number` | The longitude, usually is determined by a decimal number. |
+| `lat` | `number` | The latitude, usually is determined by a decimal number.  |
+
+### ViewPort
+
+| title    | type              | description                                |
+|----------|-------------------|--------------------------------------------|
+| `zoom`   | `number`          | The zoom level.                            |
+| `lngLat` | [LngLat](#lnglat) | Can determines the paint config of a layer |
 
 ## Usage
 
@@ -253,7 +280,7 @@ const Sample = () => {
 export default Sample;
 ```
 
-### Using a created map object
+### Using a created map instance
 
 There is a sample to access the map instance which was created,
 with using this the ability to interact with a map can be performed.
@@ -294,3 +321,4 @@ export default Sample;
 ## License
 
 MIT © [Parsimap](https://github.com/parsimap)
+
