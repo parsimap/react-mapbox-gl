@@ -31,6 +31,11 @@ yarn add @parsimap/react-mapbox-gl
 
 ## Changelog
 
+**version** `1.2.3`
+
+- An incorrect `onClick` for the `Layer` component type definition was fixed.
+- The problem with defined layer twice in some scenario was resolved.
+
 **version** `1.2.2`
 
 * `OnViewPortChange` was added to map officially, and you can get the latest center and zoom without a need to
@@ -179,9 +184,9 @@ To see more about layers, you can read [mapbox-gl-js layers](https://docs.mapbox
 
 | title    | type     | default     | description                                 |
 |----------|----------|-------------|---------------------------------------------|
-| `layout` | `string` | `undefined` | Can determines the layout config of a layer |
-| `paint`  | `string` | `undefined` | Can determines the paint config of a layer  |
-| `filter` | `string` | `undefined` | Can determines the filter for a layer       |
+| `layout` | `object` | `undefined` | Can determines the layout config of a layer |
+| `paint`  | `object` | `undefined` | Can determines the paint config of a layer  |
+| `filter` | `object` | `undefined` | Can determines the filter for a layer       |
 
 ## Type Definitions
 

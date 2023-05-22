@@ -11,7 +11,9 @@ const Layer = ({
 }: ILayerProps & mapboxgl.AnyLayer) => {
   React.useEffect(() => {
     const callback: QueueCallbackType = (map) => {
-      map.addLayer(rest);
+      if (!map.getLayer(rest.id)) {
+        map.addLayer(rest);
+      }
 
       if (onClick) {
         map.on("click", rest.id, onClick);
