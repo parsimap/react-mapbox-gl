@@ -23,6 +23,7 @@ yarn add @parsimap/react-mapbox-gl
     - [Layer Arguments](#layer-arguments)
     - [Layer Optional Arguments](#layer-optional-arguments)
 - [Type Definition](#type-definitions)
+  - [Style](#style)
   - [LngLat](#lnglat)
   - [ViewPort](#viewport)
 - [Usage](#usage)
@@ -31,14 +32,20 @@ yarn add @parsimap/react-mapbox-gl
 
 ## Changelog
 
-**version** `1.2.3`
+**version** `1.2.5`
 
-- An incorrect `onClick` for the `Layer` component type definition was fixed.
+- [Layer](#layer) can be changed by passed props such as `layout`, `paint` or `filter` in anytime.
+- [Source](#geojsonsource) and [Layer](#layer) is recreated after [Style](#style) is reloaded
+- [Style](#style) is added to the [type definitions](#type-definitions) section of the documentation.
+
+**version** `1.2.4`
+
+- An incorrect `onClick` for the [Layer](#layer) component type definition was fixed.
 - The problem with defined layer twice in some scenario was resolved.
 
 **version** `1.2.2`
 
-* `OnViewPortChange` was added to map officially, and you can get the latest center and zoom without a need to
+* `OnViewPortChange` was added to [Map](#map) officially, and you can get the latest center and zoom without a need to
   use `OnMoveEnd` to retrieve data.
 * Some improvements in performance were applied.
 * [Type Definition](#type-definitions) and added to documentation.
@@ -189,6 +196,14 @@ To see more about layers, you can read [mapbox-gl-js layers](https://docs.mapbox
 | `filter` | `object` | `undefined` | Can determines the filter for a layer       |
 
 ## Type Definitions
+
+### Style
+
+| Name                   | Description                               |
+|------------------------|-------------------------------------------|
+| `parsimap-streets-v11` | A simple open-streets map style friendly. |
+| `satellite-raster`     | A Raster tile as a satellite images       |
+| `map-raster`           | A Raster tile as a map images             |
 
 ### LngLat
 

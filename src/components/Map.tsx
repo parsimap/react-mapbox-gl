@@ -9,7 +9,7 @@ const Map = ({
   style,
   ...rest
 }: React.PropsWithChildren<IMapProps>) => {
-  const { container, map, queue } = useMap(rest);
+  const { container, map, queue, styleIsLoaded } = useMap(rest);
 
   return (
     <div
@@ -22,13 +22,12 @@ const Map = ({
       }}
     >
       {
-        <Children map={map} queue={queue}>
+        <Children map={map} queue={queue} styleIsLoaded={styleIsLoaded}>
           {children}
         </Children>
       }
     </div>
   );
 };
-
 
 export default Map;

@@ -11,9 +11,9 @@ const useInitialization = ({
   lat,
   ...rest
 }: Omit<IMapProps, "style">) => {
-  const [map, setMap] = React.useState<mapboxgl.Map>();
   const isCreated = React.useRef(false);
   const container = React.useRef<null | HTMLDivElement>(null);
+  const [map, setMap] = React.useState<mapboxgl.Map>();
 
   React.useEffect(() => {
     if (isCreated.current || !container.current) {

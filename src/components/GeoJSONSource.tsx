@@ -5,11 +5,16 @@ import { QueueCallbackType } from "../types/QueueCallbackType";
 
 type SourceType = mapboxgl.GeoJSONSource | undefined;
 
-const GeoJSONSource = ({ map, queue, id, data }: IGeoJSONSource) => {
+const GeoJSONSource = ({
+  map,
+  queue,
+  id,
+  data,
+  styleIsLoaded,
+}: IGeoJSONSource) => {
   React.useEffect(() => {
     const callback: QueueCallbackType = (map) => {
-      const source = map.getSource(id) as SourceType;
-
+      const source = map?.getSource(id) as SourceType;
       if (source) {
         source.setData(data as any);
       } else {
@@ -20,16 +25,13 @@ const GeoJSONSource = ({ map, queue, id, data }: IGeoJSONSource) => {
       }
     };
 
-    if (!map?.isStyleLoaded()) {
+    if (!map?.isStyleLoaded() || styleIsLoaded) {
+      console.log('push?')
       queue!.current[`source:${id}`] = callback;
     } else {
       callback(map);
     }
-
-    return () => {
-      // source?.setData({ type: "FeatureCollection", features: [] });
-    };
-  }, [map, id, data, queue]);
+  }, [map, id, data, queue, styleIsLoaded]);
 
   return null;
 };

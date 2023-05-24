@@ -40,9 +40,9 @@ const Sample = () => {
   });
 
   function handleClick(event: mapboxgl.MapMouseEvent) {
-    console.log("current lng:", event.lngLat.lng);
-    console.log("current lat:", event.lngLat.lat);
-    event.target.remove();
+    // console.log("current lng:", event.lngLat.lng);
+    // console.log("current lat:", event.lngLat.lat);
+    // event.target.remove();
   }
 
   function handleLoad() {

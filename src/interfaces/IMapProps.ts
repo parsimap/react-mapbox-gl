@@ -2,7 +2,8 @@ import mapboxgl from "mapbox-gl";
 import IMapEvents from "./IMapEvents";
 import React from "react";
 
-type MapStyleType = "parsimap-streets-v11" | string;
+// todo remove
+type MapStyleType = "parsimap-streets-v11" | string | any;
 
 interface IMapProps
   extends Omit<mapboxgl.MapboxOptions, "container" | "style">,
