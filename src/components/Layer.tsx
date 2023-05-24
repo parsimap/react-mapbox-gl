@@ -11,7 +11,7 @@ const Layer = ({
   ...rest
 }: ILayerProps & mapboxgl.AnyLayer) => {
   React.useEffect(() => {
-    const { layout, paint, filter, source } = rest as mapboxgl.Layer;
+    const { layout, paint, filter} = rest as mapboxgl.Layer;
 
     const callback: QueueCallbackType = (map) => {
       if (!map.getLayer(rest.id)) {
