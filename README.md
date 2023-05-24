@@ -32,7 +32,7 @@ yarn add @parsimap/react-mapbox-gl
 
 ## Changelog
 
-**version** `1.2.5`
+**version** `1.2.6`
 
 - [Layer](#layer) can be changed by passed props such as `layout`, `paint` or `filter` in anytime.
 - [Source](#geojsonsource) and [Layer](#layer) is recreated after [Style](#style) is reloaded
@@ -146,7 +146,7 @@ valid [access-token](https://account.parsimap.ir/token-registration).
 
 | title              | type                                         | default                | description                                         |
 |--------------------|----------------------------------------------|------------------------|-----------------------------------------------------|
-| `mapStyle`         | `ParsimapMapStyle`                           | `parsimap-streets-v11` | The style of the map.                               |
+| `mapStyle`         | [Style](#style)                              | `parsimap-streets-v11` | The style of the map.                               |
 | `onLoad`           | `(map: event: mapboxgl.MapboxEvent) => void` | `undefined`            | Detect the map element is defined and fully loaded. |
 | `onStyleLoad`      | `(map: event: mapboxgl.MapboxEvent) => void` | `undefined`            | Trigger when style only loaded.                     |
 | `onViewPortChange` | (viewPort: [ViewPort](#viewport)) => void    | `undefined`            | Trigger when style only loaded.                     |
@@ -230,16 +230,8 @@ coordinate of that and a marker which is added to the map in the
 defined `lngLat`.
 
 ```tsx
-import {
-  GeoJSONSource,
-  Layer,
-  Map,
-  Marker,
-  ViewPort,
-} from "@parsimap/react-mapbox-gl";
+import {GeoJSONSource, Layer, Map, Marker, ViewPort} from "@parsimap/react-mapbox-gl";
 import mapboxgl from "mapbox-gl";
-import {AtRule} from "csstype";
-import Viewport = AtRule.Viewport;
 
 /**
  * A geoJSON source as a sample data which has a LineString feature.
