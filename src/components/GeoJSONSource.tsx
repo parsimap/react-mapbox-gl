@@ -26,7 +26,6 @@ const GeoJSONSource = ({
     };
 
     if (!map?.isStyleLoaded() || styleIsLoaded) {
-      console.log('push?')
       queue!.current[`source:${id}`] = callback;
     } else {
       callback(map);
