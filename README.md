@@ -22,6 +22,15 @@ yarn add @parsimap/react-mapbox-gl
   - [Layer](#layer)
     - [Layer Arguments](#layer-arguments)
     - [Layer Optional Arguments](#layer-optional-arguments)
+  - [LineLayer](#linelayer)
+    - [LineLayer Arguments](#linelayer-arguments)
+    - [LineLayer Optional Arguments](#linelayer-optional-arguments)
+  - [FillLayer](#filllayer)
+    - [FillLayer Arguments](#filllayer-arguments)
+    - [FillLayer Optional Arguments](#filllayer-optional-arguments)
+  - [CircleLayer](#circlelayer)
+    - [CircleLayer Arguments](#circlelayer)
+    - [CircleLayer Optional Arguments](#circlelayer-optional-arguments)
 - [Type Definition](#type-definitions)
   - [Style](#style)
   - [LngLat](#lnglat)
@@ -31,6 +40,12 @@ yarn add @parsimap/react-mapbox-gl
   - [Render Map with features](#using-a-created-map-instance)
 
 ## Changelog
+
+**version** `1.2.8`
+
+- [LineLayer](#linelayer), [FillLayer](#filllayer), and [CircleLayer](#circlelayer) are provided a new way of define
+  layer for each type.
+- Some problem was fixed.
 
 **version** `1.2.6`
 
@@ -140,7 +155,7 @@ valid [access-token](https://account.parsimap.ir/token-registration).
 |---------|----------|-------------|---------------------------------------------------------------------------------|
 | `lng`   | `number` | `undefined` | Define the longitude of center of map.                                          |
 | `lat`   | `number` | `undefined` | Define the latitude of center of map.                                           |
-| `token` | `string` | `undefined` | Define an valid [access-token](https://account.parsimap.ir/token-registration). |
+| `token` | `string` | `undefined` | Define an valid [access token](https://account.parsimap.ir/token-registration). |
 
 #### Map Optional Arguments
 
@@ -181,13 +196,76 @@ To see more about layers, you can read [mapbox-gl-js layers](https://docs.mapbox
 
 #### Layer Arguments
 
-| title    | type                                                                       | default     | description                                                    |
-|----------|----------------------------------------------------------------------------|-------------|----------------------------------------------------------------|
-| `id`     | `string`                                                                   | `undefined` | An unique id to determine for identify the layer               |
-| `type`   | [Layer Type](https://docs.mapbox.com/mapbox-gl-js/style-spec/layers/#type) | `undefined` | The type for a layer which is specifying the shape of feature. |
-| `source` | `string`                                                                   | `undefined` | The source should be an existed source                         |
+| title    | type                                                                      | default     | description                                                    |
+|----------|---------------------------------------------------------------------------|-------------|----------------------------------------------------------------|
+| `id`     | `string`                                                                  | `undefined` | An unique id to determine for identify the layer               |
+| `type`   | [LayerType](https://docs.mapbox.com/mapbox-gl-js/style-spec/layers/#type) | `undefined` | The type for a layer which is specifying the shape of feature. |
+| `source` | `string`                                                                  | `undefined` | The source should be existed                                   |
 
 #### Layer Optional Arguments
+
+| title    | type     | default     | description                                 |
+|----------|----------|-------------|---------------------------------------------|
+| `layout` | `object` | `undefined` | Can determines the layout config of a layer |
+| `paint`  | `object` | `undefined` | Can determines the paint config of a layer  |
+| `filter` | `object` | `undefined` | Can determines the filter for a layer       |
+
+### LineLayer
+
+This component allows
+adding a [line layer](https://docs.mapbox.com/mapbox-gl-js/style-spec/layers/#line) to the map
+which data should be type of `LineString` in `GeoJSONSource`.
+
+#### LineLayer Arguments
+
+| title    | type     | default     | description                                      |
+|----------|----------|-------------|--------------------------------------------------|
+| `id`     | `string` | `undefined` | An unique id to determine for identify the layer |
+| `source` | `string` | `undefined` | The source should be existed                     |
+
+#### LineLayer Optional Arguments
+
+| title    | type                          | default     | description                                 |
+|----------|-------------------------------|-------------|---------------------------------------------|
+| `layout` | [LineLayerLayout](#linelayer) | `undefined` | Can determines the layout config of a layer |
+| `paint`  | `object`                      | `undefined` | Can determines the paint config of a layer  |
+| `filter` | `object`                      | `undefined` | Can determines the filter for a layer       |
+
+### FillLayer
+
+This component allows
+adding a [fill layer](https://docs.mapbox.com/mapbox-gl-js/style-spec/layers/#fill) to the map
+which data should be type of `Polygon` in `GeoJSONSource`.
+
+#### FillLayer Arguments
+
+| title    | type     | default     | description                                      |
+|----------|----------|-------------|--------------------------------------------------|
+| `id`     | `string` | `undefined` | An unique id to determine for identify the layer |
+| `source` | `string` | `undefined` | The source should be existed                     |
+
+#### FillLayer Optional Arguments
+
+| title    | type     | default     | description                                 |
+|----------|----------|-------------|---------------------------------------------|
+| `layout` | `object` | `undefined` | Can determines the layout config of a layer |
+| `paint`  | `object` | `undefined` | Can determines the paint config of a layer  |
+| `filter` | `object` | `undefined` | Can determines the filter for a layer       |
+
+### CircleLayer
+
+This component allows
+adding a [circle layer](https://docs.mapbox.com/mapbox-gl-js/style-spec/layers/#circle) to the map
+which data should be type of `Point` in `GeoJSONSource`.
+
+#### CircleLayer Arguments
+
+| title    | type     | default     | description                                      |
+|----------|----------|-------------|--------------------------------------------------|
+| `id`     | `string` | `undefined` | An unique id to determine for identify the layer |
+| `source` | `string` | `undefined` | The source should be existed                     |
+
+#### CircleLayer Optional Arguments
 
 | title    | type     | default     | description                                 |
 |----------|----------|-------------|---------------------------------------------|
@@ -219,6 +297,32 @@ To see more about layers, you can read [mapbox-gl-js layers](https://docs.mapbox
 | `zoom`   | `number`          | The zoom level.                            |
 | `lngLat` | [LngLat](#lnglat) | Can determines the paint config of a layer |
 
+### Line Layer Layout
+
+To get more details, follow the [line layer](https://docs.mapbox.com/mapbox-gl-js/style-spec/layers/#line) part of the
+mapbox documentation.
+At here, only some most common attributes are included.
+
+| title          | type                                                                                           | default   | description                                     |
+|----------------|------------------------------------------------------------------------------------------------|-----------|-------------------------------------------------|
+| `line-color`   | [LineColor](https://docs.mapbox.com/mapbox-gl-js/style-spec/layers/#paint-line-line-color)     | `#000000` | Determines the color of the line.               |
+| `line-width`   | [LineWidth](https://docs.mapbox.com/mapbox-gl-js/style-spec/layers/#paint-line-line-width)     | `1`       | Defines the width of line.                      |
+| `line-opacity` | [LineOpacity](https://docs.mapbox.com/mapbox-gl-js/style-spec/layers/#paint-line-line-opacity) | `1`       | Defines the opacity of line between `0` to `1`. |
+
+### Line Layer Paint
+
+| title    | type              | description                                |
+|----------|-------------------|--------------------------------------------|
+| `zoom`   | `number`          | The zoom level.                            |
+| `lngLat` | [LngLat](#lnglat) | Can determines the paint config of a layer |
+
+### LineLayout
+
+| title    | type              | description                                |
+|----------|-------------------|--------------------------------------------|
+| `zoom`   | `number`          | The zoom level.                            |
+| `lngLat` | [LngLat](#lnglat) | Can determines the paint config of a layer |
+
 ## Usage
 
 Samples for use the map are placed at here.
@@ -230,7 +334,7 @@ coordinate of that and a marker which is added to the map in the
 defined `lngLat`.
 
 ```tsx
-import {GeoJSONSource, Layer, Map, Marker, ViewPort} from "@parsimap/react-mapbox-gl";
+import {CircleLayer, GeoJSONSource, LineLayer, Map, Marker, ViewPort} from "@parsimap/react-mapbox-gl";
 import mapboxgl from "mapbox-gl";
 
 /**
@@ -270,7 +374,7 @@ const Sample = () => {
   }
 
   function handleViewPortChange(viewPort: Viewport) {
-    // Doing somethign with updated viewPort
+    // Doing something with updated viewPort
   }
 
   return (
@@ -282,8 +386,8 @@ const Sample = () => {
       {...DEFAULT_VIEW_PORT}
     >
       <GeoJSONSource id={"streets"} data={sourceData}/>
-      <Layer id={"line"} type={"line"} source={"streets"}/>
-      <Layer id={"point"} type={"circle"} source={"streets"}/>
+      <LineLayer type={"line"} source={"streets"}/>
+      <CircleLayer id={"point"} source={"streets"}/>
       <Marker lngLat={[51.41, 35.7575]}/>
     </Map>
   );

@@ -3,21 +3,21 @@ import React from "react";
 import ILayerProps from "../interfaces/ILayerProps";
 import { QueueCallbackType } from "../types/QueueCallbackType";
 
+type LayerPropsType = ILayerProps & mapboxgl.AnyLayer;
+
 const Layer = ({
   map,
   queue,
   onClick,
   styleIsLoaded,
   ...rest
-}: ILayerProps & mapboxgl.AnyLayer) => {
+}: LayerPropsType) => {
   React.useEffect(() => {
-    const { layout, paint, filter} = rest as mapboxgl.Layer;
+    const { layout, paint, filter } = rest as mapboxgl.Layer;
 
     const callback: QueueCallbackType = (map) => {
       if (!map.getLayer(rest.id)) {
-        // if (map.getSource(source as string)) {
-          map.addLayer(rest);
-        // }
+        map.addLayer(rest);
       } else {
         if (layout) {
           for (const layoutKey in layout) {

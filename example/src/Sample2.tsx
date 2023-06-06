@@ -1,7 +1,9 @@
 import { useState } from "react";
 import {
+  CircleLayer,
   GeoJSONSource,
   Layer,
+  LineLayer,
   Map,
   Marker,
   ViewPort,
@@ -31,7 +33,7 @@ const sourceData: mapboxgl.GeoJSONSourceRaw["data"] = {
 
 const Sample = () => {
   /**
-   * A view port can change current view and zoom of the map.
+   * A view port can change the current view and zoom of the map.
    */
   const [viewPort, setViewPort] = useState<ViewPort>({
     zoom: 16,
@@ -72,7 +74,8 @@ const Sample = () => {
           >
             <GeoJSONSource id={"streets"} data={sourceData} />
             <Layer id={"line"} type={"line"} source={"streets"} />
-            <Layer id={"point"} type={"circle"} source={"streets"} />
+            <LineLayer id={"line"} source={"streets"} />
+            <CircleLayer id={"point"} source={"streets"} />
             <Marker lngLat={[51.41, 35.7575]} />
           </Map>
         ) : (
