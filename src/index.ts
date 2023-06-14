@@ -8,6 +8,7 @@ import LineLayer from "./components/LineLayer";
 import CircleLayer from "./components/CircleLayer";
 import FillLayer from "./components/FillLayer";
 import SymbolLayer from "./components/SymbolLayer";
+import HeatmapLayer from "./components/HeatmapLayer";
 
 export {
   Map,
@@ -19,5 +20,6 @@ export {
   CircleLayer,
   SymbolLayer,
   MapStyleType,
+  HeatmapLayer,
   GeoJSONSource,
 };

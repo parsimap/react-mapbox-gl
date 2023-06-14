@@ -3,10 +3,10 @@ import ILayerProps from "../interfaces/ILayerProps";
 import mapboxgl from "mapbox-gl";
 import React from "react";
 
-type LineLayerPropsType = ILayerProps & Omit<mapboxgl.FillLayer, "type">;
+type LineLayerPropsType = ILayerProps & Omit<mapboxgl.HeatmapLayer, "type">;
 
-const FillLayer = (props: LineLayerPropsType) => (
-  <Layer type={"fill"} {...props} />
+const HeatmapLayer = (props: LineLayerPropsType) => (
+  <Layer type={"heatmap"} {...props} />
 );
 
-export default FillLayer;
+export default HeatmapLayer;
