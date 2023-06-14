@@ -1,3 +1,4 @@
+
 # react-mapboxgl
 
 > A Library to render mapboxgl mapview with power of parsimap services.
@@ -40,6 +41,12 @@ yarn add @parsimap/react-mapbox-gl
   - [Render Map with features](#using-a-created-map-instance)
 
 ## Changelog
+
+**version** `1.2.9`
+
+- The problem with adding multiple [Marker](#marker) was resolved.
+- The `color` property was added to [Marker](#marker) which able marker to has a specific color rather than `ocean blue`
+  color.
 
 **version** `1.2.8`
 
@@ -172,9 +179,10 @@ The marker can add a _map-marker_ into the **map-view**.
 
 #### Marker Arguments
 
-| title    | type                                                                 | default     | description                                                                                 |
-|----------|----------------------------------------------------------------------|-------------|---------------------------------------------------------------------------------------------|
-| `lngLat` | [LngLat](https://docs.mapbox.com/mapbox-gl-js/api/geography/#lnglat) | `undefined` | The longitude and latitude of a point such as, [number, number] or {lng:number, lat:number} |
+| title    | type                                                                 | default      | description                                                                                 |
+|----------|----------------------------------------------------------------------|--------------|---------------------------------------------------------------------------------------------|
+| `lngLat` | [LngLat](https://docs.mapbox.com/mapbox-gl-js/api/geography/#lnglat) | `undefined`  | The longitude and latitude of a point such as, [number, number] or {lng:number, lat:number} |
+| `color`  | `string`                                                             | `ocean blue` | A color which determines the fill of marker.                                                |
 
 ### GeoJSONSource
 

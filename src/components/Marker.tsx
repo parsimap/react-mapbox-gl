@@ -1,22 +1,29 @@
 import mapboxgl from "mapbox-gl";
 import React from "react";
-import IMarkerProp from "../interfaces/IMarkerProp";
+import IMarkerProps from "../interfaces/IMarkerProps";
 import { QueueCallbackType } from "../types/QueueCallbackType";
 
-const Marker = ({ map, queue, lngLat }: IMarkerProp) => {
+const Marker = ({ map, queue, lngLat, color }: IMarkerProps) => {
   const marker = React.useRef<mapboxgl.Marker>();
 
   React.useEffect(() => {
     const callback: QueueCallbackType = (map) => {
-      if (!marker.current) {
-        marker.current = new mapboxgl.Marker().setLngLat(lngLat).addTo(map);
+      if (!lngLat) {
+        return;
       }
 
-      marker.current.setLngLat(lngLat);
+      if (marker.current) {
+        marker.current.remove();
+      }
+
+      marker.current = new mapboxgl.Marker({ color })
+        .setLngLat(lngLat as mapboxgl.LngLatLike)
+        .addTo(map);
     };
 
     if (!map?.isStyleLoaded()) {
-      queue!.current[`marker`] = callback;
+      const time = new Date().getTime();
+      queue!.current[`marker:${time}`] = callback;
     } else {
       callback(map);
     }
@@ -29,7 +36,7 @@ const Marker = ({ map, queue, lngLat }: IMarkerProp) => {
     return () => {
       marker.current?.remove();
     };
-  }, [lngLat, map, queue]);
+  }, [color, lngLat, map, queue]);
 
   return null;
 };
