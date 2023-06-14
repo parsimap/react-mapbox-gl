@@ -7,6 +7,7 @@ import { MapStyleType } from "./types/MapStyleType";
 import LineLayer from "./components/LineLayer";
 import CircleLayer from "./components/CircleLayer";
 import FillLayer from "./components/FillLayer";
+import SymbolLayer from "./components/SymbolLayer";
 
 export {
   Map,
@@ -16,6 +17,7 @@ export {
   LineLayer,
   FillLayer,
   CircleLayer,
+  SymbolLayer,
   MapStyleType,
   GeoJSONSource,
 };

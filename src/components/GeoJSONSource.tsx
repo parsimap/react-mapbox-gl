@@ -1,6 +1,6 @@
 import React from "react";
 import mapboxgl from "mapbox-gl";
-import IGeoJSONSource from "../interfaces/IGeoJSONSource";
+import IGeoJSONSourceProps from "../interfaces/IGeoJSONSourceProps";
 import { QueueCallbackType } from "../types/QueueCallbackType";
 
 type SourceType = mapboxgl.GeoJSONSource | undefined;
@@ -10,8 +10,9 @@ const GeoJSONSource = ({
   queue,
   id,
   data,
+  cluster,
   styleIsLoaded,
-}: IGeoJSONSource) => {
+}: IGeoJSONSourceProps) => {
   React.useEffect(() => {
     const callback: QueueCallbackType = (map) => {
       const source = map?.getSource(id) as SourceType;
@@ -21,6 +22,7 @@ const GeoJSONSource = ({
         map.addSource(id, {
           type: "geojson",
           data,
+          cluster,
         });
       }
     };
