@@ -49,11 +49,7 @@ yarn add @parsimap/react-mapbox-gl
 
 ## Changelog
 
-**version** `1.3.1`
-
--
-
-**version** `1.3.0`
+**version** `1.3.2`
 
 - [SymbolLayer](#symbollayer-optional-arguments) and [HeatmapLayer](#heatmaplayer) were added.
 - The `cluster` were added to [GeoJSONSource](#geojsonsource) as an optional argument.
