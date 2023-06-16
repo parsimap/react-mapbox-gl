@@ -17,7 +17,7 @@ const Marker = ({ map, queue, lngLat, color }: IMarkerProps) => {
       }
 
       marker.current = new mapboxgl.Marker({ color })
-        .setLngLat(lngLat as mapboxgl.LngLatLike)
+        .setLngLat(lngLat)
         .addTo(map);
     };
 

@@ -49,15 +49,20 @@ yarn add @parsimap/react-mapbox-gl
 
 ## Changelog
 
+**version** `1.3.1`
+
+-
+
 **version** `1.3.0`
 
 - [SymbolLayer](#symbollayer-optional-arguments) and [HeatmapLayer](#heatmaplayer) were added.
 - The `cluster` were added to [GeoJSONSource](#geojsonsource) as an optional argument.
 - The `color` which added to [Marker](#marker) as an argument is seperated to optional arguments.
-- The `number[]` type of lngLat for [Marker](#marker) was added and there is no need to enforce type
+- The `[number, number]` type of lngLat for [Marker](#marker) was added and there is no need to enforce type
   as `mapboxgl.LngLatLike`.
 - The `bounds` argument of the [Map](#map) component is accepted not `mapboxgl.LngLatBounds`
-  or `mapboxgl.LngLatBoundsLike` as input which means the input can also `number[][]` and there is no need to define
+  or `mapboxgl.LngLatBoundsLike` as input which means the input can also `[number, number, number, number]` and there is
+  no need to define
   type of input as standard type.
 - `bounds` and `maxBounds` were added to the [Map Optional Arguments](#map-optional-arguments) section.
 - Some problems were found while update source which is started work on it and fixed in upcoming versions.
@@ -186,15 +191,15 @@ valid [access-token](https://account.parsimap.ir/token-registration).
 
 #### Map Optional Arguments
 
-| title              | type                                                                                             | default                | description                                                                                                                            |
-|--------------------|--------------------------------------------------------------------------------------------------|------------------------|----------------------------------------------------------------------------------------------------------------------------------------|
-| `mapStyle`         | [Style](#style)                                                                                  | `parsimap-streets-v11` | The style of the map.                                                                                                                  |
-| `onLoad`           | `(map: event: mapboxgl.MapboxEvent) => void`                                                     | `undefined`            | Detect the map element is defined and fully loaded.                                                                                    |
-| `onStyleLoad`      | `(map: event: mapboxgl.MapboxEvent) => void`                                                     | `undefined`            | Trigger when style only loaded.                                                                                                        |
-| `onViewPortChange` | (viewPort: [ViewPort](#viewport)) => void                                                        | `undefined`            | Trigger when style only loaded.                                                                                                        |
-| `zoom`             | `number`                                                                                         | `undefined`            | Change zoom level of the map.                                                                                                          |
-| `bounds`           | `number[][]`\|  [LngLatBounds](https://docs.mapbox.com/mapbox-gl-js/api/geography/#lnglatbounds) | `undefined`            | Determine the current bounds of the map.                                                                                               |
-| `maxBounds`        | `number[][]`\|  [LngLatBounds](https://docs.mapbox.com/mapbox-gl-js/api/geography/#lnglatbounds) | `undefined`            | Determine the maximum bounds of the map which is can provided moving the map by a boundary for example a country or specific province. |
+| title              | type                                                                                                                   | default                | description                                                                                                                            |
+|--------------------|------------------------------------------------------------------------------------------------------------------------|------------------------|----------------------------------------------------------------------------------------------------------------------------------------|
+| `mapStyle`         | [Style](#style)                                                                                                        | `parsimap-streets-v11` | The style of the map.                                                                                                                  |
+| `onLoad`           | `(map: event: mapboxgl.MapboxEvent) => void`                                                                           | `undefined`            | Detect the map element is defined and fully loaded.                                                                                    |
+| `onStyleLoad`      | `(map: event: mapboxgl.MapboxEvent) => void`                                                                           | `undefined`            | Trigger when style only loaded.                                                                                                        |
+| `onViewPortChange` | (viewPort: [ViewPort](#viewport)) => void                                                                              | `undefined`            | Trigger when style only loaded.                                                                                                        |
+| `zoom`             | `number`                                                                                                               | `undefined`            | Change zoom level of the map.                                                                                                          |
+| `bounds`           | `[number, number, number, number]`\|  [LngLatBounds](https://docs.mapbox.com/mapbox-gl-js/api/geography/#lnglatbounds) | `undefined`            | Determine the current bounds of the map.                                                                                               |
+| `maxBounds`        | `[number, number, number, number]`\|  [LngLatBounds](https://docs.mapbox.com/mapbox-gl-js/api/geography/#lnglatbounds) | `undefined`            | Determine the maximum bounds of the map which is can provided moving the map by a boundary for example a country or specific province. |
 
 ### Marker
 
@@ -202,9 +207,9 @@ The marker can add a _map-marker_ into the **map-view**.
 
 #### Marker Arguments
 
-| title    | type                                                                             | default     | description                                                                                 |
-|----------|----------------------------------------------------------------------------------|-------------|---------------------------------------------------------------------------------------------|
-| `lngLat` | number[] \| [LngLat](https://docs.mapbox.com/mapbox-gl-js/api/geography/#lnglat) | `undefined` | The longitude and latitude of a point such as, [number, number] or {lng:number, lat:number} |
+| title    | type                                                                                     | default     | description                                                                                 |
+|----------|------------------------------------------------------------------------------------------|-------------|---------------------------------------------------------------------------------------------|
+| `lngLat` | [number, number] \| [LngLat](https://docs.mapbox.com/mapbox-gl-js/api/geography/#lnglat) | `undefined` | The longitude and latitude of a point such as, [number, number] or {lng:number, lat:number} |
 
 #### Marker Optional Arguments
 
