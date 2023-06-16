@@ -17,12 +17,19 @@ yarn add @parsimap/react-mapbox-gl
 - [Components](#components)
   - [Map](#map)
     - [Map Arguments](#map-arguments)
-    - [Map Arguments](#map-optional-arguments)
+    - [Map Optional Arguments](#map-optional-arguments)
   - [Marker](#marker)
     - [Marker Arguments](#marker-arguments)
+    - [Marker Optional Arguments](#marker-optional-arguments)
   - [Layer](#layer)
     - [Layer Arguments](#layer-arguments)
     - [Layer Optional Arguments](#layer-optional-arguments)
+  - [SymbolLayer](#symbollayer)
+    - [SymbolLayer Arguments](#symbollayer-arguments)
+    - [SymbolLayer Optional Arguments](#symbollayer-optional-arguments)
+  - [HeatmapLayer](#heatmaplayer)
+    - [SymbolLayer Arguments](#heatmaplayer-arguments)
+    - [SymbolLayer Optional Arguments](#heatmaplayer-optional-arguments)
   - [LineLayer](#linelayer)
     - [LineLayer Arguments](#linelayer-arguments)
     - [LineLayer Optional Arguments](#linelayer-optional-arguments)
@@ -41,6 +48,19 @@ yarn add @parsimap/react-mapbox-gl
   - [Render Map with features](#using-a-created-map-instance)
 
 ## Changelog
+
+**version** `1.3.0`
+
+- [SymbolLayer](#symbollayer-optional-arguments) and [HeatmapLayer](#heatmaplayer) were added.
+- The `cluster` were added to [GeoJSONSource](#geojsonsource) as an optional argument.
+- The `color` which added to [Marker](#marker) as an argument is seperated to optional arguments.
+- The `number[]` type of lngLat for [Marker](#marker) was added and there is no need to enforce type
+  as `mapboxgl.LngLatLike`.
+- The `bounds` argument of the [Map](#map) component is accepted not `mapboxgl.LngLatBounds`
+  or `mapboxgl.LngLatBoundsLike` as input which means the input can also `number[][]` and there is no need to define
+  type of input as standard type.
+- `bounds` and `maxBounds` were added to the [Map Optional Arguments](#map-optional-arguments) section.
+- Some problems were found while update source which is started work on it and fixed in upcoming versions.
 
 **version** `1.2.9`
 
@@ -166,12 +186,15 @@ valid [access-token](https://account.parsimap.ir/token-registration).
 
 #### Map Optional Arguments
 
-| title              | type                                         | default                | description                                         |
-|--------------------|----------------------------------------------|------------------------|-----------------------------------------------------|
-| `mapStyle`         | [Style](#style)                              | `parsimap-streets-v11` | The style of the map.                               |
-| `onLoad`           | `(map: event: mapboxgl.MapboxEvent) => void` | `undefined`            | Detect the map element is defined and fully loaded. |
-| `onStyleLoad`      | `(map: event: mapboxgl.MapboxEvent) => void` | `undefined`            | Trigger when style only loaded.                     |
-| `onViewPortChange` | (viewPort: [ViewPort](#viewport)) => void    | `undefined`            | Trigger when style only loaded.                     |
+| title              | type                                                                                             | default                | description                                                                                                                            |
+|--------------------|--------------------------------------------------------------------------------------------------|------------------------|----------------------------------------------------------------------------------------------------------------------------------------|
+| `mapStyle`         | [Style](#style)                                                                                  | `parsimap-streets-v11` | The style of the map.                                                                                                                  |
+| `onLoad`           | `(map: event: mapboxgl.MapboxEvent) => void`                                                     | `undefined`            | Detect the map element is defined and fully loaded.                                                                                    |
+| `onStyleLoad`      | `(map: event: mapboxgl.MapboxEvent) => void`                                                     | `undefined`            | Trigger when style only loaded.                                                                                                        |
+| `onViewPortChange` | (viewPort: [ViewPort](#viewport)) => void                                                        | `undefined`            | Trigger when style only loaded.                                                                                                        |
+| `zoom`             | `number`                                                                                         | `undefined`            | Change zoom level of the map.                                                                                                          |
+| `bounds`           | `number[][]`\|  [LngLatBounds](https://docs.mapbox.com/mapbox-gl-js/api/geography/#lnglatbounds) | `undefined`            | Determine the current bounds of the map.                                                                                               |
+| `maxBounds`        | `number[][]`\|  [LngLatBounds](https://docs.mapbox.com/mapbox-gl-js/api/geography/#lnglatbounds) | `undefined`            | Determine the maximum bounds of the map which is can provided moving the map by a boundary for example a country or specific province. |
 
 ### Marker
 
@@ -179,10 +202,15 @@ The marker can add a _map-marker_ into the **map-view**.
 
 #### Marker Arguments
 
-| title    | type                                                                 | default      | description                                                                                 |
-|----------|----------------------------------------------------------------------|--------------|---------------------------------------------------------------------------------------------|
-| `lngLat` | [LngLat](https://docs.mapbox.com/mapbox-gl-js/api/geography/#lnglat) | `undefined`  | The longitude and latitude of a point such as, [number, number] or {lng:number, lat:number} |
-| `color`  | `string`                                                             | `ocean blue` | A color which determines the fill of marker.                                                |
+| title    | type                                                                             | default     | description                                                                                 |
+|----------|----------------------------------------------------------------------------------|-------------|---------------------------------------------------------------------------------------------|
+| `lngLat` | number[] \| [LngLat](https://docs.mapbox.com/mapbox-gl-js/api/geography/#lnglat) | `undefined` | The longitude and latitude of a point such as, [number, number] or {lng:number, lat:number} |
+
+#### Marker Optional Arguments
+
+| title   | type     | default      | description                                  |
+|---------|----------|--------------|----------------------------------------------|
+| `color` | `string` | `ocean blue` | A color which determines the fill of marker. |
 
 ### GeoJSONSource
 
@@ -190,10 +218,11 @@ This component provided an interface for adding geoJSON format file to the map.
 
 #### GeoJSONSource Arguments
 
-| title  | type                                             | default     | description                                             |
-|--------|--------------------------------------------------|-------------|---------------------------------------------------------|
-| `id`   | `string`                                         | `undefined` | an unique id determine for identify the source by that. |
-| `data` | [GeoJSON](https://en.wikipedia.org/wiki/GeoJSON) | `undefined` | a GeoJSON format data                                   |
+| title     | type                                             | default     | description                                                      |
+|-----------|--------------------------------------------------|-------------|------------------------------------------------------------------|
+| `id`      | `string`                                         | `undefined` | An unique id determine for identify the source by that.          |
+| `data`    | [GeoJSON](https://en.wikipedia.org/wiki/GeoJSON) | `undefined` | A GeoJSON format data                                            |
+| `cluster` | `boolean`                                        | `undefined` | This property could convert the source to a cluster-able source. |
 
 ### Layer
 
@@ -274,6 +303,48 @@ which data should be type of `Point` in `GeoJSONSource`.
 | `source` | `string` | `undefined` | The source should be existed                     |
 
 #### CircleLayer Optional Arguments
+
+| title    | type     | default     | description                                 |
+|----------|----------|-------------|---------------------------------------------|
+| `layout` | `object` | `undefined` | Can determines the layout config of a layer |
+| `paint`  | `object` | `undefined` | Can determines the paint config of a layer  |
+| `filter` | `object` | `undefined` | Can determines the filter for a layer       |
+
+### SymbolLayer
+
+This component allows
+adding a [circle layer](https://docs.mapbox.com/mapbox-gl-js/style-spec/layers/#symbol) to the map
+which data should be type of `Point` in `GeoJSONSource`.
+
+#### SymbolLayer Arguments
+
+| title    | type     | default     | description                                      |
+|----------|----------|-------------|--------------------------------------------------|
+| `id`     | `string` | `undefined` | An unique id to determine for identify the layer |
+| `source` | `string` | `undefined` | The source should be existed                     |
+
+#### SymbolLayer Optional Arguments
+
+| title    | type     | default     | description                                 |
+|----------|----------|-------------|---------------------------------------------|
+| `layout` | `object` | `undefined` | Can determines the layout config of a layer |
+| `paint`  | `object` | `undefined` | Can determines the paint config of a layer  |
+| `filter` | `object` | `undefined` | Can determines the filter for a layer       |
+
+### HeatmapLayer
+
+This component allows
+adding a [circle layer](https://docs.mapbox.com/mapbox-gl-js/style-spec/layers/#heatmap) to the map
+which data should be type of `Point` in `GeoJSONSource`.
+
+#### HeatmapLayer Arguments
+
+| title    | type     | default     | description                                      |
+|----------|----------|-------------|--------------------------------------------------|
+| `id`     | `string` | `undefined` | An unique id to determine for identify the layer |
+| `source` | `string` | `undefined` | The source should be existed                     |
+
+#### HeatmapLayer Optional Arguments
 
 | title    | type     | default     | description                                 |
 |----------|----------|-------------|---------------------------------------------|
