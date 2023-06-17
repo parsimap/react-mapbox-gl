@@ -13,36 +13,38 @@ const Layer = ({
   ...rest
 }: LayerPropsType) => {
   React.useEffect(() => {
-    const { layout, paint, filter } = rest as mapboxgl.Layer;
+    // const { layout, paint, filter } = rest as mapboxgl.Layer;
 
     const callback: QueueCallbackType = (map) => {
-      if (!map.getLayer(rest.id)) {
-        map.addLayer(rest);
-      } else {
-        if (layout) {
-          for (const layoutKey in layout) {
-            map.setLayoutProperty(
-              rest.id,
-              layoutKey,
-              layout[layoutKey as keyof typeof layout]
-            );
-          }
-        }
+      map.addLayer(rest);
 
-        if (paint) {
-          for (const key in paint) {
-            map.setPaintProperty(
-              rest.id,
-              key,
-              paint[key as keyof typeof paint]
-            );
-          }
-        }
-
-        if (filter) {
-          map.setFilter(rest.id, filter);
-        }
-      }
+      // if (!map.getLayer(rest.id)) {
+      //   map.addLayer(rest);
+      // } else {
+      //   if (layout) {
+      //     for (const layoutKey in layout) {
+      //       map.setLayoutProperty(
+      //         rest.id,
+      //         layoutKey,
+      //         layout[layoutKey as keyof typeof layout]
+      //       );
+      //     }
+      //   }
+      //
+      //   if (paint) {
+      //     for (const key in paint) {
+      //       map.setPaintProperty(
+      //         rest.id,
+      //         key,
+      //         paint[key as keyof typeof paint]
+      //       );
+      //     }
+      //   }
+      //
+      //   if (filter) {
+      //     map.setFilter(rest.id, filter);
+      //   }
+      // }
 
       if (onClick) {
         map.off("click", rest.id, onClick);
@@ -50,7 +52,7 @@ const Layer = ({
       }
     };
 
-    if (!map?.isStyleLoaded() || styleIsLoaded) {
+    if (!map?.isStyleLoaded() || !styleIsLoaded) {
       queue!.current[`layer:${rest.id}`] = callback;
     } else {
       callback(map);
@@ -59,6 +61,10 @@ const Layer = ({
     return () => {
       if (onClick && map?.isStyleLoaded()) {
         map.off("click", rest.id, onClick);
+      }
+
+      if (map?.getLayer(rest.id)) {
+        map?.removeLayer(rest.id);
       }
     };
   }, [map, onClick, queue, rest, styleIsLoaded]);

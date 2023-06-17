@@ -10,14 +10,14 @@ const useQueue = (map?: mapboxgl.Map): QueueMutableRefType => {
       return;
     }
 
-    function handleLoad() {
-      for (const key in queue.current) {
-        if (queue.current[key]) {
-          queue.current[key](map!);
-          delete queue.current[key];
-        }
-      }
-    }
+    // function handleLoad() {
+    //   for (const key in queue.current) {
+    //     if (queue.current[key]) {
+    //       queue.current[key](map!);
+    //       delete queue.current[key];
+    //     }
+    //   }
+    // }
 
     function handleIdle() {
       if (!Object.keys(queue.current).length) {
@@ -49,12 +49,14 @@ const useQueue = (map?: mapboxgl.Map): QueueMutableRefType => {
       }
     }
 
-    map.on("load", handleLoad);
-    map.on("idle", handleIdle);
+    // map.on("load", handleLoad);
+    // map.on("idle", handleIdle);
+    map.on("data", handleIdle);
 
     return () => {
-      map.off("load", handleLoad);
-      map.off("idle", handleIdle);
+      // map.off("load", handleLoad);
+      // map.off("idle", handleIdle);
+      map.off("data", handleIdle);
     };
   }, [map]);
 

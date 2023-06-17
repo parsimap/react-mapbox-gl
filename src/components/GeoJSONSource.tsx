@@ -10,14 +10,14 @@ const GeoJSONSource = ({
   queue,
   id,
   data,
-  cluster,
+  cluster = false,
   styleIsLoaded,
 }: IGeoJSONSourceProps) => {
   React.useEffect(() => {
     const callback: QueueCallbackType = (map) => {
       const source = map?.getSource(id) as SourceType;
       if (source) {
-        source.setData(data as any);
+        source.setData(data);
       } else {
         map.addSource(id, {
           type: "geojson",
@@ -32,7 +32,7 @@ const GeoJSONSource = ({
     } else {
       callback(map);
     }
-  }, [map, id, data, queue, styleIsLoaded]);
+  }, [map, id, data, queue, styleIsLoaded, cluster]);
 
   return null;
 };
