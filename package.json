@@ -1,6 +1,6 @@
 {
   "name": "@parsimap/react-mapbox-gl",
-  "version": "1.3.4",
+  "version": "1.3.5",
   "description": "A Library to render mapboxgl mapview with power of parsimap services.",
   "author": "muhamadzolfaghari",
   "license": "MIT",
