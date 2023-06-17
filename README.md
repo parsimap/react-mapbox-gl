@@ -49,6 +49,10 @@ yarn add @parsimap/react-mapbox-gl
 
 ## Changelog
 
+**version** `1.3.5`
+
+- The problem with layer change by source is currently resolved.
+
 **version** `1.3.2`
 
 - [SymbolLayer](#symbollayer-optional-arguments) and [HeatmapLayer](#heatmaplayer) were added.
