@@ -7,8 +7,6 @@ const Marker = ({ map, queue, lngLat, color }: IMarkerProps) => {
   const taskId = React.useRef<string>(`marker:${new Date().getTime()}`);
   const marker = React.useRef<mapboxgl.Marker>();
 
-  console.log(taskId)
-
   React.useEffect(() => {
     const callback: QueueCallbackType = (map) => {
       if (!lngLat) {
