@@ -4,11 +4,15 @@ import IMarkerProps from "../interfaces/IMarkerProps";
 import { QueueCallbackType } from "../types/QueueCallbackType";
 
 const Marker = ({ map, queue, lngLat, color }: IMarkerProps) => {
+  const taskId = React.useRef<string>(`marker:${new Date().getTime()}`);
   const marker = React.useRef<mapboxgl.Marker>();
+
+  console.log(taskId)
 
   React.useEffect(() => {
     const callback: QueueCallbackType = (map) => {
       if (!lngLat) {
+        marker.current?.remove();
         return;
       }
 
@@ -22,15 +26,9 @@ const Marker = ({ map, queue, lngLat, color }: IMarkerProps) => {
     };
 
     if (!map?.isStyleLoaded()) {
-      const time = new Date().getTime();
-      queue!.current[`marker:${time}`] = callback;
+      queue!.current[taskId.current] = callback;
     } else {
       callback(map);
-    }
-
-    if (!lngLat) {
-      marker.current?.remove();
-      return;
     }
 
     return () => {
