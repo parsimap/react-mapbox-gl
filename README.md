@@ -49,6 +49,13 @@ yarn add @parsimap/react-mapbox-gl
 
 ## Changelog
 
+**version** `1.4.0`
+
+- The problem with change `bounds` and `viewPort` was resolved.
+- Emitting `onViewPortChange` with state doesn't cause any problem.
+- [Marker](#marker) is now stable and the problem with update `color` and lngLat doesn't cause any flickering on the
+  HTMLDivElement.
+
 **version** `1.3.5`
 
 - The problem with layer change by source is currently resolved.

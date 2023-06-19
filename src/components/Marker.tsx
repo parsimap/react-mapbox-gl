@@ -6,6 +6,7 @@ import { QueueCallbackType } from "../types/QueueCallbackType";
 const Marker = ({ map, queue, lngLat, color }: IMarkerProps) => {
   const taskId = React.useRef<string>(`marker:${new Date().getTime()}`);
   const marker = React.useRef<mapboxgl.Marker>();
+  const prevColor = React.useRef<string>();
 
   React.useEffect(() => {
     const callback: QueueCallbackType = (map) => {
@@ -14,13 +15,21 @@ const Marker = ({ map, queue, lngLat, color }: IMarkerProps) => {
         return;
       }
 
-      if (marker.current) {
-        marker.current.remove();
+      if (!marker.current) {
+        marker.current = new mapboxgl.Marker({ color })
+          .setLngLat(lngLat)
+          .addTo(map);
+      } else {
+        if (color !== prevColor.current) {
+          marker.current = new mapboxgl.Marker({ color })
+            .setLngLat(lngLat)
+            .addTo(map);
+        } else {
+          marker.current.setLngLat(lngLat);
+        }
       }
 
-      marker.current = new mapboxgl.Marker({ color })
-        .setLngLat(lngLat)
-        .addTo(map);
+      prevColor.current = color;
     };
 
     if (!map?.isStyleLoaded()) {
@@ -28,10 +37,6 @@ const Marker = ({ map, queue, lngLat, color }: IMarkerProps) => {
     } else {
       callback(map);
     }
-
-    return () => {
-      marker.current?.remove();
-    };
   }, [color, lngLat, map, queue]);
 
   return null;

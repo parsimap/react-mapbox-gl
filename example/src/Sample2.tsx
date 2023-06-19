@@ -45,11 +45,18 @@ const Sample = () => {
     // console.log("current lng:", event.lngLat.lng);
     // console.log("current lat:", event.lngLat.lat);
     // event.target.remove();
+    setViewPort(prev=>({
+      lng: prev.lng,
+      lat: prev.lat + .01,
+      zoom: prev.zoom
+    }))
   }
 
   function handleLoad() {
     // console.log(e.target.fitBounds([[51.41, 35.7575], [51.411, 35.75751]]));
   }
+
+  console.log(viewPort)
 
   const [toggle, setToggle] = useState(true);
 

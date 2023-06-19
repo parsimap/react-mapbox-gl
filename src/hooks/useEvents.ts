@@ -160,17 +160,9 @@ const useEvents = (
       const { lng, lat } = map.getCenter();
       const prev = prevViewPort.current;
 
-      onViewPortChange?.({ lng, lat, zoom });
-
-      if (!prev) {
+      if (!prev || prev.lng !== lng || prev.lat !== lat || prev.zoom !== zoom) {
         prevViewPort.current = new ViewPort(lng, lat, zoom);
-        // onViewPortChange?.(prevViewPort.current);
-        return;
-      }
-
-      if (prev.lng !== lng || prev.lat !== lat || prev.zoom !== zoom) {
-        prevViewPort.current = new ViewPort(lng, lat, zoom);
-        // onViewPortChange?.(prevViewPort.current);
+        onViewPortChange?.({ lng, lat, zoom });
       }
     }
 

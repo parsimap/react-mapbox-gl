@@ -12,10 +12,11 @@ const useViewPort = (
     if (!map) {
       return;
     }
+    const prev = prevViewPort.current;
 
-    if (!prevViewPort.current) {
+    if (!prev || prev.lng !== lng || prev.lat !== lat || prev.zoom !== zoom) {
       let newZoom;
-      map.setCenter(new mapboxgl.LngLat(lng, lat));
+      map.setCenter([lng, lat]);
 
       if (zoom) {
         newZoom = zoom;
@@ -25,7 +26,6 @@ const useViewPort = (
       }
 
       prevViewPort.current = new ViewPort(lng, lat, newZoom);
-      return;
     }
   }, [zoom, lng, lat, map, prevViewPort]);
 

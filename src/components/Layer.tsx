@@ -20,11 +20,11 @@ const Layer = ({
         map.addLayer(rest);
       } else {
         if (layout) {
-          for (const layoutKey in layout) {
+          for (const key in layout) {
             map.setLayoutProperty(
               rest.id,
-              layoutKey,
-              layout[layoutKey as keyof typeof layout]
+              key,
+              layout[key as keyof typeof layout]
             );
           }
         }
