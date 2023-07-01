@@ -1,7 +1,7 @@
 import React from "react";
 import mapboxgl from "mapbox-gl";
-import getStyleURL from "../lib/utilites/getStyleURL";
 import IMapProps from "../interfaces/IMapProps";
+import normalizeMapStyle from "../lib/utilites/normalizeMapStyle";
 
 const useInitialization = ({
   token,
@@ -29,11 +29,7 @@ const useInitialization = ({
       options.center = new mapboxgl.LngLat(lng, lat);
     }
 
-    options.style = getStyleURL(
-      mapStyle ?? "parsimap-streets-v11",
-      token,
-      baseApiUrl
-    );
+    options.style = normalizeMapStyle(mapStyle, token, baseApiUrl)
 
     const newMap = new mapboxgl.Map(options);
     isCreated.current = true;

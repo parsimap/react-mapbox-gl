@@ -1,4 +1,3 @@
-
 # react-mapboxgl
 
 > A Library to render mapboxgl mapview with power of parsimap services.
@@ -49,6 +48,12 @@ yarn add @parsimap/react-mapbox-gl
 
 ## Changelog
 
+**version** `1.4.1`
+
+- The working on stability and update layer property have been finished.
+- Some problem was resolved in case of keeping performance in a good state.
+- The First preview of the image currently has been started.
+
 **version** `1.4.0`
 
 - The problem with change `bounds` and `viewPort` was resolved.
@@ -65,19 +70,20 @@ yarn add @parsimap/react-mapbox-gl
 - [SymbolLayer](#symbollayer-optional-arguments) and [HeatmapLayer](#heatmaplayer) were added.
 - The `cluster` were added to [GeoJSONSource](#geojsonsource) as an optional argument.
 - The `color` which added to [Marker](#marker) as an argument is seperated to optional arguments.
-- The `[number, number]` type of lngLat for [Marker](#marker) was added and there is no need to enforce type
+- The `[number, number]` type of lngLat for [Marker](#marker) was added, and there is no need to enforce a type
   as `mapboxgl.LngLatLike`.
 - The `bounds` argument of the [Map](#map) component is accepted not `mapboxgl.LngLatBounds`
   or `mapboxgl.LngLatBoundsLike` as input which means the input can also `[number, number, number, number]` and there is
   no need to define
-  type of input as standard type.
+  a type of input as a standard type.
 - `bounds` and `maxBounds` were added to the [Map Optional Arguments](#map-optional-arguments) section.
-- Some problems were found while update source which is started work on it and fixed in upcoming versions.
+- Some problems were found while update source which is started working on it and fixed in upcoming versions.
 
 **version** `1.2.9`
 
-- The problem with adding multiple [Marker](#marker) was resolved.
-- The `color` property was added to [Marker](#marker) which able marker to has a specific color rather than `ocean blue`
+- The problem with adding multiple [Markers](#marker) was resolved.
+- The `color` property was added to [Marker](#marker) which able marker to have a specific color rather
+  than `ocean blue`
   color.
 
 **version** `1.2.8`

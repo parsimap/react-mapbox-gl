@@ -19,7 +19,7 @@ export {
   FillLayer,
   CircleLayer,
   SymbolLayer,
-  MapStyleType,
   HeatmapLayer,
   GeoJSONSource,
 };
+export type { MapStyleType };

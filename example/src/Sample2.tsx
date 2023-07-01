@@ -45,20 +45,23 @@ const Sample = () => {
     // console.log("current lng:", event.lngLat.lng);
     // console.log("current lat:", event.lngLat.lat);
     // event.target.remove();
-    setViewPort(prev=>({
+    setViewPort((prev) => ({
       lng: prev.lng,
-      lat: prev.lat + .01,
-      zoom: prev.zoom
-    }))
+      lat: prev.lat + 0.01,
+      zoom: prev.zoom,
+    }));
   }
 
   function handleLoad() {
     // console.log(e.target.fitBounds([[51.41, 35.7575], [51.411, 35.75751]]));
   }
 
-  console.log(viewPort)
+  console.log(viewPort);
 
   const [toggle, setToggle] = useState(true);
+  const [basemap, setBasemap] = useState<"map-raster" | "sat-raster">(
+    "map-raster"
+  );
 
   return (
     <>
@@ -69,6 +72,15 @@ const Sample = () => {
       >
         Toggle map
       </button>
+      <button
+        onClick={() => {
+          setBasemap(
+            basemap === "map-raster" ? "satellite-raster" : "map-raster"
+          );
+        }}
+      >
+        toggle basemap
+      </button>
       <div style={{ height: "100%" }}>
         {!toggle ? (
           <Map
@@ -76,7 +88,7 @@ const Sample = () => {
             onViewPortChange={setViewPort}
             token={"ac3fed7ee26d424e9781400f4106dd38"}
             onLoad={handleLoad}
-            mapStyle={"parsimap-streets-v11"}
+            mapStyle={basemap}
             {...viewPort}
           >
             <GeoJSONSource id={"streets"} data={sourceData} />

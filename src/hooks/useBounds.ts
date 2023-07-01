@@ -3,6 +3,7 @@ import React, { useRef } from "react";
 import IMapProps from "../interfaces/IMapProps";
 import { QueueCallbackType } from "../types/QueueCallbackType";
 import { QueueMutableRefType } from "../types/QueueMutableRefType";
+import normalizeBounds from "../lib/utilites/normalizeBounds";
 
 const useBounds = (
   { bounds, fitBoundsOptions }: IMapProps,
@@ -17,7 +18,8 @@ const useBounds = (
     }
 
     if (prevBounds.current) {
-      if (prevBounds.current.every((val, idx) => val === bounds[idx])) {
+      const boundsArray = normalizeBounds(bounds);
+      if (prevBounds.current.every((val, idx) => val === boundsArray[idx])) {
         return;
       }
     }

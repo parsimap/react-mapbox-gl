@@ -3,7 +3,74 @@ import React from "react";
 import ILayerProps from "../interfaces/ILayerProps";
 import { QueueCallbackType } from "../types/QueueCallbackType";
 
+type LayoutKeyType = keyof mapboxgl.Layout;
+type PaintKeyType = keyof mapboxgl.AnyPaint;
 type LayerPropsType = ILayerProps & mapboxgl.AnyLayer;
+
+function updateLayer(
+  layer: mapboxgl.Layer,
+  layout: mapboxgl.Layout | undefined,
+  paint: mapboxgl.AnyPaint | undefined,
+  filter: any[] | undefined,
+  map: mapboxgl.Map
+) {
+  if (layout) {
+    for (const key in layout) {
+      const newValue = layout[key as LayoutKeyType];
+      const prevValue = layer.layout?.[key as LayoutKeyType];
+
+      if (prevValue === newValue) {
+        continue;
+      }
+
+      map.setLayoutProperty(layer.id, key, layout[key as LayoutKeyType]);
+    }
+  }
+
+  if (paint) {
+    for (const key in paint) {
+      const prevValue = layer.paint?.[key as PaintKeyType];
+      const newValue = paint[key as PaintKeyType];
+
+      if (prevValue === newValue) {
+        continue;
+      }
+
+      map.setPaintProperty(layer.id, key, paint[key as PaintKeyType]);
+    }
+  }
+
+  if (filter) {
+    map.setFilter(layer.id, filter);
+  }
+}
+
+function getCallback(
+  rest: LayerPropsType,
+  layout: mapboxgl.Layout | undefined,
+  paint: mapboxgl.AnyPaint | undefined,
+  filter: any[] | undefined,
+  onClick: ((event: mapboxgl.MapMouseEvent) => void) | undefined
+) {
+  const layerId = rest.id;
+
+  const callback: QueueCallbackType = (map) => {
+    const layer = map.getLayer(layerId);
+
+    if (!layer) {
+      map.addLayer(rest);
+    } else {
+      updateLayer(layer, layout, paint, filter, map);
+    }
+
+    if (onClick) {
+      map.off("click", layerId, onClick);
+      map.on("click", layerId, onClick);
+    }
+  };
+
+  return callback;
+}
 
 const Layer = ({
   map,
@@ -13,58 +80,25 @@ const Layer = ({
   ...rest
 }: LayerPropsType) => {
   React.useEffect(() => {
-    const { layout, paint, filter } = rest as mapboxgl.Layer;
+    if (!map) {
+      return;
+    }
 
-    const callback: QueueCallbackType = (map) => {
-      if (!map.getLayer(rest.id)) {
-        map.addLayer(rest);
-      } else {
-        if (layout) {
-          for (const key in layout) {
-            map.setLayoutProperty(
-              rest.id,
-              key,
-              layout[key as keyof typeof layout]
-            );
-          }
-        }
+    const layer = rest as mapboxgl.Layer;
+    const { layout, paint, filter, id } = layer;
+    const callback = getCallback(rest, layout, paint, filter, onClick);
+    const source = map.getSource(layer.source as string);
 
-        if (paint) {
-          for (const key in paint) {
-            map.setPaintProperty(
-              rest.id,
-              key,
-              paint[key as keyof typeof paint]
-            );
-          }
-        }
-
-        if (filter) {
-          map.setFilter(rest.id, filter);
-        }
-      }
-
-      if (onClick) {
-        map.off("click", rest.id, onClick);
-        map.on("click", rest.id, onClick);
-      }
-    };
-
-    if (!map?.isStyleLoaded() || !styleIsLoaded) {
-      queue!.current[`layer:${rest.id}`] = callback;
+    if (!styleIsLoaded || !source) {
+      queue!.current[`layer:${rest.id},source:${layer.source}`] = callback;
     } else {
       callback(map);
     }
 
-    return () => {
-      if (onClick && map?.isStyleLoaded()) {
-        map.off("click", rest.id, onClick);
-      }
-
-      if (map?.getLayer(rest.id)) {
-        map?.removeLayer(rest.id);
-      }
-    };
+    if (onClick) {
+      map.off("click", id, onClick);
+      map.on("click", id, onClick);
+    }
   }, [map, onClick, queue, rest, styleIsLoaded]);
 
   return null;
