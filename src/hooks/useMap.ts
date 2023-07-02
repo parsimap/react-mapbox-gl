@@ -12,9 +12,9 @@ const useMap = (props: IMapProps) => {
   const prevViewPort = useViewPort(props, map);
   const styleIsLoaded = useStyle(props, map);
   const queue = useQueue(styleIsLoaded, map);
+  useBounds(props, styleIsLoaded, queue, map);
   useEvents(props, prevViewPort, map);
   usePlugins(props.cdnUrl);
-  useBounds(props, map, queue);
 
   return { container, map, queue, styleIsLoaded };
 };

@@ -1,6 +1,4 @@
 import React from "react";
-import { QueueCallbackType } from "./QueueCallbackType";
+import IQueue from "../interfaces/IQeueu";
 
-export type QueueMutableRefType = React.MutableRefObject<
-  Record<string, QueueCallbackType>
->;
+export type QueueMutableRefType = React.MutableRefObject<IQueue>;

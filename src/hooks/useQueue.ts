@@ -1,22 +1,16 @@
 import React from "react";
 import mapboxgl from "mapbox-gl";
 import { QueueMutableRefType } from "../types/QueueMutableRefType";
+import ISourceQueueTask from "../interfaces/ISourceQueueTask";
 
 function runQueueCallbacks(
-  searchPattern: RegExp,
-  queue: QueueMutableRefType,
+  tasks: Record<string, ISourceQueueTask>,
   keys: string[],
   map: mapboxgl.Map
 ) {
-  for (let i = 0; i <= keys.length; i++) {
-    const key = keys[i];
-
-    if (queue.current[key]) {
-      if (key.match(searchPattern)) {
-        queue.current[key](map);
-        delete queue.current[key];
-      }
-    }
+  for (const key in tasks) {
+    tasks[key].callback(map);
+    delete tasks[key];
   }
 }
 
@@ -24,7 +18,12 @@ const useQueue = (
   styleIsLoaded: boolean,
   map?: mapboxgl.Map
 ): QueueMutableRefType => {
-  const queue = React.useRef<QueueMutableRefType["current"]>({});
+  const queue = React.useRef<QueueMutableRefType["current"]>({
+    images(map: mapboxgl.Map): void {},
+    layers: {},
+    sources: {},
+    markers: {},
+  });
 
   React.useEffect(() => {
     if (!map) {
@@ -38,11 +37,16 @@ const useQueue = (
     }
 
     if (styleIsLoaded) {
-      runQueueCallbacks(/^source:.+/, queue, keys, map!);
+      runQueueCallbacks(queue.current.sources, keys, map!);
     }
 
     function handleSourceData(e: mapboxgl.MapSourceDataEvent) {
-      runQueueCallbacks(new RegExp(`^layer:.+,source:${e.sourceId}`), queue, keys, map!);
+      // // runQueueCallbacks(
+      // //   queue.current.layers,
+      // //   queue,
+      // //   keys
+      // // );
+      // console.log(queue.current.layers);
     }
 
     map.on("sourcedata", handleSourceData);

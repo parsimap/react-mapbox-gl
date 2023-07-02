@@ -88,10 +88,12 @@ const Layer = ({
     const { layout, paint, filter, id } = layer;
     const callback = getCallback(rest, layout, paint, filter, onClick);
     const source = map.getSource(layer.source as string);
+    // const sourceId = layer.source as string;
 
     if (!styleIsLoaded || !source) {
-      queue!.current[`layer:${rest.id},source:${layer.source}`] = callback;
+      // queue!.current.layers[rest.id] = { sourceId, callback };
     } else {
+      delete queue!.current.layers[rest.id]
       callback(map);
     }
 

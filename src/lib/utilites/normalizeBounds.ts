@@ -15,8 +15,10 @@ export default function normalizeBounds(bounds: mapboxgl.LngLatBoundsLike) {
   }
 
   if (typeof bounds === "object") {
-    if (bounds["sw"] && bounds["ne"]) {
-      const updatedBounds = bounds as object as IBoundsObject;
+    const newBounds = bounds as object;
+
+    if ("sw" in newBounds && "ne" in newBounds) {
+      const updatedBounds = newBounds as IBoundsObject;
       return new mapboxgl.LngLatBounds(
         updatedBounds.sw,
         updatedBounds.ne

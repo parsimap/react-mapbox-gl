@@ -33,7 +33,7 @@ const Marker = ({ map, queue, lngLat, color }: IMarkerProps) => {
     };
 
     if (!map?.isStyleLoaded()) {
-      queue!.current[taskId.current] = callback;
+      queue!.current.markers[taskId.current] = callback;
     } else {
       callback(map);
     }

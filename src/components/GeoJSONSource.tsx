@@ -33,7 +33,7 @@ const GeoJSONSource = ({
     };
 
     if (!styleIsLoaded) {
-      queue!.current[`source:${id}`] = callback;
+      queue!.current.sources[id] = { id: id, callback };
     } else {
       callback(map!);
     }

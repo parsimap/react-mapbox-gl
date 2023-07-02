@@ -1,19 +1,19 @@
 import mapboxgl from "mapbox-gl";
 import React, { useRef } from "react";
 import IMapProps from "../interfaces/IMapProps";
-import { QueueCallbackType } from "../types/QueueCallbackType";
 import { QueueMutableRefType } from "../types/QueueMutableRefType";
 import normalizeBounds from "../lib/utilites/normalizeBounds";
 
 const useBounds = (
   { bounds, fitBoundsOptions }: IMapProps,
-  map?: mapboxgl.Map,
-  queue?: QueueMutableRefType
+  styleIsLoaded: boolean,
+  queue?: QueueMutableRefType,
+  map?: mapboxgl.Map
 ) => {
   const prevBounds = useRef<[number, number, number, number]>();
 
   React.useEffect(() => {
-    if (!bounds) {
+    if (!bounds || !map || !styleIsLoaded) {
       return;
     }
 
@@ -24,16 +24,8 @@ const useBounds = (
       }
     }
 
-    const callback: QueueCallbackType = (map) => {
-      map.fitBounds(bounds, fitBoundsOptions);
-    };
-
-    if (!map?.isStyleLoaded()) {
-      queue!.current["bounds"] = callback;
-    } else {
-      callback(map);
-    }
-  }, [bounds, fitBoundsOptions, map, queue]);
+    map.fitBounds(bounds, fitBoundsOptions);
+  }, [bounds, styleIsLoaded, fitBoundsOptions, map, queue]);
 };
 
 export default useBounds;
