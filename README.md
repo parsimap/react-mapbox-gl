@@ -48,13 +48,13 @@ yarn add @parsimap/react-mapbox-gl
 
 ## Changelog
 
-**version** `1.4.1`
+**version** `1.4.2`
 
 - The working on stability and update layer property have been finished.
 - Some problem was resolved in case of keeping performance in a good state.
 - The First preview of the image currently has been started.
 
-**version** `1.4.1`
+**version** `1.4.0`
 
 - The problem with change `bounds` and `viewPort` was resolved.
 - Emitting `onViewPortChange` with state doesn't cause any problem.
