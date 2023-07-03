@@ -13,6 +13,7 @@ const useEvents = (
     onMoveEnd,
     onStyleLoad,
     onMoveStart,
+    onSourceData,
     onViewPortChange,
   }: IMapEvents,
   prevViewPort: React.MutableRefObject<ViewPort | undefined>,
@@ -145,6 +146,22 @@ const useEvents = (
       }
     };
   }, [map, onStyleLoad]);
+
+  React.useEffect(() => {
+    if (!map) {
+      return;
+    }
+
+    if (onSourceData) {
+      map.on("sourcedata", onSourceData);
+    }
+
+    return () => {
+      if (onSourceData) {
+        map.off("sourcedata", onSourceData);
+      }
+    };
+  }, [map, onSourceData]);
 
   React.useEffect(() => {
     if (!map || !onViewPortChange) {

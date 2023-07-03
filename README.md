@@ -48,6 +48,10 @@ yarn add @parsimap/react-mapbox-gl
 
 ## Changelog
 
+**version** `1.4.3`
+
+- The `onSourceData` event was added.
+
 **version** `1.4.2`
 
 - The working on stability and update layer property have been finished.

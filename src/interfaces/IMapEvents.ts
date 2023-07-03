@@ -11,4 +11,5 @@ export default interface IMapEvents {
   onClick?: (event: mapboxgl.MapMouseEvent) => void;
   onMoveEnd?: (event: mapboxgl.MapboxEvent) => void;
   onStyleLoad?: (event: mapboxgl.MapboxEvent) => void;
+  onSourceData?: (event: mapboxgl.MapboxEvent) => void;
 }

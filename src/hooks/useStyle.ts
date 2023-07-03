@@ -44,7 +44,7 @@ const useStyle = (
       return;
     }
 
-    function handleData(e: mapboxgl.MapDataEvent) {
+    function handleSourceData(e: mapboxgl.MapDataEvent) {
       if (timeout.current) {
         clearTimeout(timeout.current);
       }
@@ -59,10 +59,10 @@ const useStyle = (
       }, 200);
     }
 
-    map.on('sourcedata', handleData)
+    map.on('sourcedata', handleSourceData)
 
     return () => {
-      map.off('sourcedata', handleData)
+      map.off('sourcedata', handleSourceData)
     };
   }, [map]);
 
