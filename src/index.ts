@@ -22,4 +22,5 @@ export {
   HeatmapLayer,
   GeoJSONSource,
 };
+
 export type { MapStyleType };
