@@ -54,6 +54,10 @@ import "mapbox-gl/dist/mapbox-gl.css";
 
 ## Changelog
 
+**version** `1.4.7`
+
+- The freezing problem while updating bounds was fixed.
+
 **version** `1.4.6`
 
 - The problem with global css while implementing in `Next.Js` with _page routing strategy_ was resolved.

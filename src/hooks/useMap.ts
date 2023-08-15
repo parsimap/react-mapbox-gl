@@ -7,7 +7,7 @@ import useInitialization from "./useInitialization";
 import useBounds from "./useBounds";
 import useStyle from "./useStyle";
 
-const useMap = (props: IMapProps) => {
+export default function useMap(props: IMapProps) {
   const { map, container } = useInitialization(props);
   const prevViewPort = useViewPort(props, map);
   const styleIsLoaded = useStyle(props, map);
@@ -17,6 +17,4 @@ const useMap = (props: IMapProps) => {
   usePlugins(props.cdnUrl);
 
   return { container, map, queue, styleIsLoaded };
-};
-
-export default useMap;
+}

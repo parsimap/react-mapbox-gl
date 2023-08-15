@@ -32,7 +32,7 @@ type MapStyleType = "parsimap-streets-v11" | string;
 const getStyleURL = (
   name: string,
   token: string,
-  baseApiUrl = "https://api.parsimap.ir"
+  baseApiUrl = "https://api.parsimap.ir",
 ) => {
   const url = new URL(baseApiUrl);
   url.pathname += `/styles/${name}`;
@@ -45,7 +45,7 @@ const preloadMapboxPlugins = (cdnUrl = "https://cdn.parsimap.ir") => {
   if (mapboxgl.getRTLTextPluginStatus() === "unavailable") {
     mapboxgl.setRTLTextPlugin(
       `${cdnUrl}/third-party/mapbox-gl-js/plugins/mapbox-gl-rtl-text/v0.2.3/mapbox-gl-rtl-text.js`,
-      () => {}
+      () => {},
     );
   }
 };
@@ -248,6 +248,7 @@ const Map: React.FC<React.PropsWithChildren<PropsType>> = ({
   );
 };
 
+// noinspection JSUnusedLocalSymbols
 const ChildrenWithProps = ({
   children,
   map,

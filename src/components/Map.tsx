@@ -3,19 +3,19 @@ import IMapProps from "../interfaces/IMapProps";
 import useMap from "../hooks/useMap";
 import Children from "./Children";
 
-const Map = ({
-  children,
+export default function Map({
   style,
+  children,
   ...rest
-}: React.PropsWithChildren<IMapProps>) => {
+}: React.PropsWithChildren<IMapProps>) {
   const { container, map, queue, styleIsLoaded } = useMap(rest);
 
   return (
     <div
       ref={container}
       style={{
-        height: "100%",
         width: "100%",
+        height: "100%",
         position: "relative",
         ...style,
       }}
@@ -27,6 +27,4 @@ const Map = ({
       }
     </div>
   );
-};
-
-export default Map;
+}
