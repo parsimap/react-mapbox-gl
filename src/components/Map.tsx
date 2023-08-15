@@ -1,5 +1,4 @@
 import React from "react";
-import "mapbox-gl/dist/mapbox-gl.css";
 import IMapProps from "../interfaces/IMapProps";
 import useMap from "../hooks/useMap";
 import Children from "./Children";
