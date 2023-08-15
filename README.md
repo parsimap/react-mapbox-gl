@@ -10,6 +10,12 @@
 yarn add @parsimap/react-mapbox-gl
 ```
 
+## Import Mapbox css file
+
+```js
+import "mapbox-gl/dist/mapbox-gl.css";
+```
+
 # Getting started with React Mapbox GL
 
 - [Changelog](#changelog)
@@ -44,9 +50,14 @@ yarn add @parsimap/react-mapbox-gl
   - [ViewPort](#viewport)
 - [Usage](#usage)
   - [Render Map with features](#render-map-with-features)
-  - [Render Map with features](#using-a-created-map-instance)
+  - [Using a created map instance](#using-a-created-map-instance)
 
 ## Changelog
+
+**version** `1.4.6`
+
+- The problem with global css while implementing in `Next.Js` with _page routing strategy_ was resolved.
+- Documentations were updated and some part was changed due to the adding css file manually instead import immediately.
 
 **version** `1.4.3`
 
@@ -437,6 +448,7 @@ defined `lngLat`.
 ```tsx
 import {CircleLayer, GeoJSONSource, LineLayer, Map, Marker, ViewPort} from "@parsimap/react-mapbox-gl";
 import mapboxgl from "mapbox-gl";
+import "mapbox-gl/dist/mapbox-gl.css";
 
 /**
  * A geoJSON source as a sample data which has a LineString feature.
@@ -509,6 +521,7 @@ instance there is a need to use `load` event on the other hand `onLoad` prop of 
 ```tsx
 import {Map, ViewPort} from "@parsimap/react-mapbox-gl";
 import mapboxgl from "mapbox-gl";
+import "mapbox-gl/dist/mapbox-gl.css";
 
 /**
  * A view port can change current view and zoom of the map.
